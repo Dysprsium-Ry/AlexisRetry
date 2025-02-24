@@ -38,14 +38,14 @@
             this.label12 = new System.Windows.Forms.Label();
             this.labelService2 = new System.Windows.Forms.Label();
             this.labelService1 = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dataGridViewToolsInServices = new System.Windows.Forms.DataGridView();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.tabPageTransactionLogs = new System.Windows.Forms.TabPage();
             this.buttonTransactionDelete = new System.Windows.Forms.Button();
             this.buttonTransactionEdit = new System.Windows.Forms.Button();
             this.buttonTransactionAdd = new System.Windows.Forms.Button();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTransactionLogs = new System.Windows.Forms.DataGridView();
             this.tabPageClients = new System.Windows.Forms.TabPage();
             this.button4 = new System.Windows.Forms.Button();
             this.buttonClientEdit = new System.Windows.Forms.Button();
@@ -58,32 +58,39 @@
             this.textBoxPhoneNumber = new System.Windows.Forms.TextBox();
             this.textBoxEmail = new System.Windows.Forms.TextBox();
             this.textBoxUsername = new System.Windows.Forms.TextBox();
-            this.dataGridView3 = new System.Windows.Forms.DataGridView();
+            this.dataGridViewClients = new System.Windows.Forms.DataGridView();
             this.tabPageOfferedServices = new System.Windows.Forms.TabPage();
-            this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.textBox8 = new System.Windows.Forms.TextBox();
-            this.textBox7 = new System.Windows.Forms.TextBox();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.button7 = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
-            this.button9 = new System.Windows.Forms.Button();
-            this.dataGridView4 = new System.Windows.Forms.DataGridView();
+            this.textBoxFeepHourLib = new System.Windows.Forms.TextBox();
+            this.textBoxToolLib = new System.Windows.Forms.TextBox();
+            this.buttonDeleteLibItem = new System.Windows.Forms.Button();
+            this.buttonEditLibItem = new System.Windows.Forms.Button();
+            this.buttonAddLibItem = new System.Windows.Forms.Button();
+            this.dataGridViewServiceLibrary = new System.Windows.Forms.DataGridView();
             this.tabPageBillingStatements = new System.Windows.Forms.TabPage();
             this.tabPageThisWeek = new System.Windows.Forms.TabPage();
+            this.comboBoxServiceslib = new System.Windows.Forms.ComboBox();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.buttonRemoveAdditionalService = new System.Windows.Forms.Button();
+            this.buttonAddAdditionalServiceLib = new System.Windows.Forms.Button();
+            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.buttonPaid = new System.Windows.Forms.Button();
             this.panelTop.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPageServices.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewToolsInServices)).BeginInit();
             this.tabPageTransactionLogs.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTransactionLogs)).BeginInit();
             this.tabPageClients.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewClients)).BeginInit();
             this.tabPageOfferedServices.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewServiceLibrary)).BeginInit();
+            this.tabPageBillingStatements.SuspendLayout();
+            this.tabPageThisWeek.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.SuspendLayout();
             // 
             // panelTop
@@ -124,13 +131,15 @@
             // 
             // tabPageServices
             // 
+            this.tabPageServices.Controls.Add(this.buttonRemoveAdditionalService);
+            this.tabPageServices.Controls.Add(this.buttonAddAdditionalServiceLib);
             this.tabPageServices.Controls.Add(this.textBox10);
             this.tabPageServices.Controls.Add(this.textBox9);
             this.tabPageServices.Controls.Add(this.label13);
             this.tabPageServices.Controls.Add(this.label12);
             this.tabPageServices.Controls.Add(this.labelService2);
             this.tabPageServices.Controls.Add(this.labelService1);
-            this.tabPageServices.Controls.Add(this.dataGridView1);
+            this.tabPageServices.Controls.Add(this.dataGridViewToolsInServices);
             this.tabPageServices.Controls.Add(this.comboBox2);
             this.tabPageServices.Controls.Add(this.comboBox1);
             this.tabPageServices.Location = new System.Drawing.Point(4, 22);
@@ -144,7 +153,7 @@
             // textBox10
             // 
             this.textBox10.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox10.Location = new System.Drawing.Point(98, 392);
+            this.textBox10.Location = new System.Drawing.Point(98, 269);
             this.textBox10.Name = "textBox10";
             this.textBox10.Size = new System.Drawing.Size(220, 30);
             this.textBox10.TabIndex = 10;
@@ -152,7 +161,7 @@
             // textBox9
             // 
             this.textBox9.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox9.Location = new System.Drawing.Point(98, 283);
+            this.textBox9.Location = new System.Drawing.Point(98, 202);
             this.textBox9.Name = "textBox9";
             this.textBox9.Size = new System.Drawing.Size(220, 30);
             this.textBox9.TabIndex = 9;
@@ -160,7 +169,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(89, 376);
+            this.label13.Location = new System.Drawing.Point(89, 253);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(25, 13);
             this.label13.TabIndex = 8;
@@ -169,7 +178,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(89, 267);
+            this.label12.Location = new System.Drawing.Point(89, 186);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(85, 13);
             this.label12.TabIndex = 7;
@@ -178,7 +187,7 @@
             // labelService2
             // 
             this.labelService2.AutoSize = true;
-            this.labelService2.Location = new System.Drawing.Point(89, 157);
+            this.labelService2.Location = new System.Drawing.Point(89, 118);
             this.labelService2.Name = "labelService2";
             this.labelService2.Size = new System.Drawing.Size(49, 13);
             this.labelService2.TabIndex = 6;
@@ -193,22 +202,22 @@
             this.labelService1.TabIndex = 5;
             this.labelService1.Text = "Service 1";
             // 
-            // dataGridView1
+            // dataGridViewToolsInServices
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(480, 39);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(404, 386);
-            this.dataGridView1.TabIndex = 4;
+            this.dataGridViewToolsInServices.AllowUserToAddRows = false;
+            this.dataGridViewToolsInServices.AllowUserToDeleteRows = false;
+            this.dataGridViewToolsInServices.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewToolsInServices.Location = new System.Drawing.Point(480, 39);
+            this.dataGridViewToolsInServices.Name = "dataGridViewToolsInServices";
+            this.dataGridViewToolsInServices.ReadOnly = true;
+            this.dataGridViewToolsInServices.Size = new System.Drawing.Size(404, 386);
+            this.dataGridViewToolsInServices.TabIndex = 4;
             // 
             // comboBox2
             // 
             this.comboBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(98, 173);
+            this.comboBox2.Location = new System.Drawing.Point(98, 134);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(220, 33);
             this.comboBox2.TabIndex = 1;
@@ -227,7 +236,7 @@
             this.tabPageTransactionLogs.Controls.Add(this.buttonTransactionDelete);
             this.tabPageTransactionLogs.Controls.Add(this.buttonTransactionEdit);
             this.tabPageTransactionLogs.Controls.Add(this.buttonTransactionAdd);
-            this.tabPageTransactionLogs.Controls.Add(this.dataGridView2);
+            this.tabPageTransactionLogs.Controls.Add(this.dataGridViewTransactionLogs);
             this.tabPageTransactionLogs.Location = new System.Drawing.Point(4, 22);
             this.tabPageTransactionLogs.Name = "tabPageTransactionLogs";
             this.tabPageTransactionLogs.Padding = new System.Windows.Forms.Padding(3);
@@ -263,16 +272,16 @@
             this.buttonTransactionAdd.Text = "Add";
             this.buttonTransactionAdd.UseVisualStyleBackColor = true;
             // 
-            // dataGridView2
+            // dataGridViewTransactionLogs
             // 
-            this.dataGridView2.AllowUserToAddRows = false;
-            this.dataGridView2.AllowUserToDeleteRows = false;
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Location = new System.Drawing.Point(35, 22);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.ReadOnly = true;
-            this.dataGridView2.Size = new System.Drawing.Size(721, 412);
-            this.dataGridView2.TabIndex = 0;
+            this.dataGridViewTransactionLogs.AllowUserToAddRows = false;
+            this.dataGridViewTransactionLogs.AllowUserToDeleteRows = false;
+            this.dataGridViewTransactionLogs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewTransactionLogs.Location = new System.Drawing.Point(35, 22);
+            this.dataGridViewTransactionLogs.Name = "dataGridViewTransactionLogs";
+            this.dataGridViewTransactionLogs.ReadOnly = true;
+            this.dataGridViewTransactionLogs.Size = new System.Drawing.Size(721, 412);
+            this.dataGridViewTransactionLogs.TabIndex = 0;
             // 
             // tabPageClients
             // 
@@ -287,7 +296,7 @@
             this.tabPageClients.Controls.Add(this.textBoxPhoneNumber);
             this.tabPageClients.Controls.Add(this.textBoxEmail);
             this.tabPageClients.Controls.Add(this.textBoxUsername);
-            this.tabPageClients.Controls.Add(this.dataGridView3);
+            this.tabPageClients.Controls.Add(this.dataGridViewClients);
             this.tabPageClients.Location = new System.Drawing.Point(4, 22);
             this.tabPageClients.Name = "tabPageClients";
             this.tabPageClients.Size = new System.Drawing.Size(922, 463);
@@ -390,46 +399,35 @@
             this.textBoxUsername.Size = new System.Drawing.Size(222, 27);
             this.textBoxUsername.TabIndex = 1;
             // 
-            // dataGridView3
+            // dataGridViewClients
             // 
-            this.dataGridView3.AllowUserToAddRows = false;
-            this.dataGridView3.AllowUserToDeleteRows = false;
-            this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView3.Location = new System.Drawing.Point(22, 26);
-            this.dataGridView3.Name = "dataGridView3";
-            this.dataGridView3.ReadOnly = true;
-            this.dataGridView3.Size = new System.Drawing.Size(608, 415);
-            this.dataGridView3.TabIndex = 0;
+            this.dataGridViewClients.AllowUserToAddRows = false;
+            this.dataGridViewClients.AllowUserToDeleteRows = false;
+            this.dataGridViewClients.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewClients.Location = new System.Drawing.Point(35, 22);
+            this.dataGridViewClients.Name = "dataGridViewClients";
+            this.dataGridViewClients.ReadOnly = true;
+            this.dataGridViewClients.Size = new System.Drawing.Size(608, 415);
+            this.dataGridViewClients.TabIndex = 0;
             // 
             // tabPageOfferedServices
             // 
-            this.tabPageOfferedServices.Controls.Add(this.label8);
+            this.tabPageOfferedServices.Controls.Add(this.comboBoxServiceslib);
             this.tabPageOfferedServices.Controls.Add(this.label7);
             this.tabPageOfferedServices.Controls.Add(this.label6);
             this.tabPageOfferedServices.Controls.Add(this.label5);
-            this.tabPageOfferedServices.Controls.Add(this.textBox8);
-            this.tabPageOfferedServices.Controls.Add(this.textBox7);
-            this.tabPageOfferedServices.Controls.Add(this.textBox6);
-            this.tabPageOfferedServices.Controls.Add(this.textBox5);
-            this.tabPageOfferedServices.Controls.Add(this.button7);
-            this.tabPageOfferedServices.Controls.Add(this.button8);
-            this.tabPageOfferedServices.Controls.Add(this.button9);
-            this.tabPageOfferedServices.Controls.Add(this.dataGridView4);
+            this.tabPageOfferedServices.Controls.Add(this.textBoxFeepHourLib);
+            this.tabPageOfferedServices.Controls.Add(this.textBoxToolLib);
+            this.tabPageOfferedServices.Controls.Add(this.buttonDeleteLibItem);
+            this.tabPageOfferedServices.Controls.Add(this.buttonEditLibItem);
+            this.tabPageOfferedServices.Controls.Add(this.buttonAddLibItem);
+            this.tabPageOfferedServices.Controls.Add(this.dataGridViewServiceLibrary);
             this.tabPageOfferedServices.Location = new System.Drawing.Point(4, 22);
             this.tabPageOfferedServices.Name = "tabPageOfferedServices";
             this.tabPageOfferedServices.Size = new System.Drawing.Size(922, 463);
             this.tabPageOfferedServices.TabIndex = 3;
             this.tabPageOfferedServices.Text = "Services Library";
             this.tabPageOfferedServices.UseVisualStyleBackColor = true;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(50, 342);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(35, 13);
-            this.label8.TabIndex = 22;
-            this.label8.Text = "label8";
             // 
             // label7
             // 
@@ -458,75 +456,61 @@
             this.label5.TabIndex = 19;
             this.label5.Text = "Service";
             // 
-            // textBox8
+            // textBoxFeepHourLib
             // 
-            this.textBox8.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox8.Location = new System.Drawing.Point(50, 358);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(306, 29);
-            this.textBox8.TabIndex = 18;
+            this.textBoxFeepHourLib.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxFeepHourLib.Location = new System.Drawing.Point(50, 260);
+            this.textBoxFeepHourLib.Name = "textBoxFeepHourLib";
+            this.textBoxFeepHourLib.Size = new System.Drawing.Size(306, 29);
+            this.textBoxFeepHourLib.TabIndex = 17;
             // 
-            // textBox7
+            // textBoxToolLib
             // 
-            this.textBox7.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox7.Location = new System.Drawing.Point(50, 260);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(306, 29);
-            this.textBox7.TabIndex = 17;
+            this.textBoxToolLib.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxToolLib.Location = new System.Drawing.Point(50, 156);
+            this.textBoxToolLib.Name = "textBoxToolLib";
+            this.textBoxToolLib.Size = new System.Drawing.Size(306, 29);
+            this.textBoxToolLib.TabIndex = 16;
             // 
-            // textBox6
+            // buttonDeleteLibItem
             // 
-            this.textBox6.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox6.Location = new System.Drawing.Point(50, 156);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(306, 29);
-            this.textBox6.TabIndex = 16;
+            this.buttonDeleteLibItem.Location = new System.Drawing.Point(769, 412);
+            this.buttonDeleteLibItem.Name = "buttonDeleteLibItem";
+            this.buttonDeleteLibItem.Size = new System.Drawing.Size(126, 28);
+            this.buttonDeleteLibItem.TabIndex = 14;
+            this.buttonDeleteLibItem.Text = "Delete";
+            this.buttonDeleteLibItem.UseVisualStyleBackColor = true;
             // 
-            // textBox5
+            // buttonEditLibItem
             // 
-            this.textBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox5.Location = new System.Drawing.Point(50, 58);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(306, 29);
-            this.textBox5.TabIndex = 15;
+            this.buttonEditLibItem.Location = new System.Drawing.Point(622, 412);
+            this.buttonEditLibItem.Name = "buttonEditLibItem";
+            this.buttonEditLibItem.Size = new System.Drawing.Size(126, 28);
+            this.buttonEditLibItem.TabIndex = 13;
+            this.buttonEditLibItem.Text = "Edit";
+            this.buttonEditLibItem.UseVisualStyleBackColor = true;
             // 
-            // button7
+            // buttonAddLibItem
             // 
-            this.button7.Location = new System.Drawing.Point(769, 412);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(126, 28);
-            this.button7.TabIndex = 14;
-            this.button7.Text = "Delete";
-            this.button7.UseVisualStyleBackColor = true;
+            this.buttonAddLibItem.Location = new System.Drawing.Point(473, 412);
+            this.buttonAddLibItem.Name = "buttonAddLibItem";
+            this.buttonAddLibItem.Size = new System.Drawing.Size(126, 28);
+            this.buttonAddLibItem.TabIndex = 12;
+            this.buttonAddLibItem.Text = "Add";
+            this.buttonAddLibItem.UseVisualStyleBackColor = true;
             // 
-            // button8
+            // dataGridViewServiceLibrary
             // 
-            this.button8.Location = new System.Drawing.Point(622, 412);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(126, 28);
-            this.button8.TabIndex = 13;
-            this.button8.Text = "Edit";
-            this.button8.UseVisualStyleBackColor = true;
-            // 
-            // button9
-            // 
-            this.button9.Location = new System.Drawing.Point(473, 412);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(126, 28);
-            this.button9.TabIndex = 12;
-            this.button9.Text = "Add";
-            this.button9.UseVisualStyleBackColor = true;
-            // 
-            // dataGridView4
-            // 
-            this.dataGridView4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView4.Location = new System.Drawing.Point(473, 29);
-            this.dataGridView4.Name = "dataGridView4";
-            this.dataGridView4.Size = new System.Drawing.Size(422, 365);
-            this.dataGridView4.TabIndex = 0;
+            this.dataGridViewServiceLibrary.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewServiceLibrary.Location = new System.Drawing.Point(473, 29);
+            this.dataGridViewServiceLibrary.Name = "dataGridViewServiceLibrary";
+            this.dataGridViewServiceLibrary.Size = new System.Drawing.Size(422, 365);
+            this.dataGridViewServiceLibrary.TabIndex = 0;
             // 
             // tabPageBillingStatements
             // 
+            this.tabPageBillingStatements.Controls.Add(this.buttonPaid);
+            this.tabPageBillingStatements.Controls.Add(this.dataGridView1);
             this.tabPageBillingStatements.Location = new System.Drawing.Point(4, 22);
             this.tabPageBillingStatements.Name = "tabPageBillingStatements";
             this.tabPageBillingStatements.Size = new System.Drawing.Size(922, 463);
@@ -536,12 +520,65 @@
             // 
             // tabPageThisWeek
             // 
+            this.tabPageThisWeek.Controls.Add(this.dataGridView2);
             this.tabPageThisWeek.Location = new System.Drawing.Point(4, 22);
             this.tabPageThisWeek.Name = "tabPageThisWeek";
             this.tabPageThisWeek.Size = new System.Drawing.Size(922, 463);
             this.tabPageThisWeek.TabIndex = 5;
             this.tabPageThisWeek.Text = "Weekly Schedule";
             this.tabPageThisWeek.UseVisualStyleBackColor = true;
+            // 
+            // comboBoxServiceslib
+            // 
+            this.comboBoxServiceslib.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBoxServiceslib.FormattingEnabled = true;
+            this.comboBoxServiceslib.Location = new System.Drawing.Point(53, 55);
+            this.comboBoxServiceslib.Name = "comboBoxServiceslib";
+            this.comboBoxServiceslib.Size = new System.Drawing.Size(303, 32);
+            this.comboBoxServiceslib.TabIndex = 23;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(35, 22);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(687, 402);
+            this.dataGridView1.TabIndex = 0;
+            // 
+            // buttonRemoveAdditionalService
+            // 
+            this.buttonRemoveAdditionalService.Location = new System.Drawing.Point(98, 381);
+            this.buttonRemoveAdditionalService.Name = "buttonRemoveAdditionalService";
+            this.buttonRemoveAdditionalService.Size = new System.Drawing.Size(220, 35);
+            this.buttonRemoveAdditionalService.TabIndex = 27;
+            this.buttonRemoveAdditionalService.Text = "Remove Service";
+            this.buttonRemoveAdditionalService.UseVisualStyleBackColor = true;
+            // 
+            // buttonAddAdditionalServiceLib
+            // 
+            this.buttonAddAdditionalServiceLib.Location = new System.Drawing.Point(98, 340);
+            this.buttonAddAdditionalServiceLib.Name = "buttonAddAdditionalServiceLib";
+            this.buttonAddAdditionalServiceLib.Size = new System.Drawing.Size(220, 35);
+            this.buttonAddAdditionalServiceLib.TabIndex = 26;
+            this.buttonAddAdditionalServiceLib.Text = "Add More Service";
+            this.buttonAddAdditionalServiceLib.UseVisualStyleBackColor = true;
+            // 
+            // dataGridView2
+            // 
+            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView2.Location = new System.Drawing.Point(35, 22);
+            this.dataGridView2.Name = "dataGridView2";
+            this.dataGridView2.Size = new System.Drawing.Size(858, 402);
+            this.dataGridView2.TabIndex = 1;
+            // 
+            // buttonPaid
+            // 
+            this.buttonPaid.Location = new System.Drawing.Point(749, 388);
+            this.buttonPaid.Name = "buttonPaid";
+            this.buttonPaid.Size = new System.Drawing.Size(152, 36);
+            this.buttonPaid.TabIndex = 1;
+            this.buttonPaid.Text = "Paid";
+            this.buttonPaid.UseVisualStyleBackColor = true;
             // 
             // AlexisConstructionServices
             // 
@@ -558,15 +595,19 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPageServices.ResumeLayout(false);
             this.tabPageServices.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewToolsInServices)).EndInit();
             this.tabPageTransactionLogs.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTransactionLogs)).EndInit();
             this.tabPageClients.ResumeLayout(false);
             this.tabPageClients.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewClients)).EndInit();
             this.tabPageOfferedServices.ResumeLayout(false);
             this.tabPageOfferedServices.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewServiceLibrary)).EndInit();
+            this.tabPageBillingStatements.ResumeLayout(false);
+            this.tabPageThisWeek.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -579,10 +620,10 @@
         private System.Windows.Forms.TabPage tabPageTransactionLogs;
         private System.Windows.Forms.TabPage tabPageClients;
         private System.Windows.Forms.TabPage tabPageOfferedServices;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dataGridViewToolsInServices;
         private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.DataGridView dataGridViewTransactionLogs;
         private System.Windows.Forms.Button buttonTransactionDelete;
         private System.Windows.Forms.Button buttonTransactionEdit;
         private System.Windows.Forms.Button buttonTransactionAdd;
@@ -590,7 +631,7 @@
         private System.Windows.Forms.TextBox textBoxPhoneNumber;
         private System.Windows.Forms.TextBox textBoxEmail;
         private System.Windows.Forms.TextBox textBoxUsername;
-        private System.Windows.Forms.DataGridView dataGridView3;
+        private System.Windows.Forms.DataGridView dataGridViewClients;
         private System.Windows.Forms.Label labelName;
         private System.Windows.Forms.Label labelPhoneNumber;
         private System.Windows.Forms.Label labelEmail;
@@ -598,19 +639,16 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button buttonClientEdit;
         private System.Windows.Forms.Button buttonClientAdd;
-        private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button button8;
-        private System.Windows.Forms.Button button9;
-        private System.Windows.Forms.DataGridView dataGridView4;
+        private System.Windows.Forms.Button buttonDeleteLibItem;
+        private System.Windows.Forms.Button buttonEditLibItem;
+        private System.Windows.Forms.Button buttonAddLibItem;
+        private System.Windows.Forms.DataGridView dataGridViewServiceLibrary;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox8;
-        private System.Windows.Forms.TextBox textBox7;
-        private System.Windows.Forms.TextBox textBox6;
-        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TextBox textBoxFeepHourLib;
+        private System.Windows.Forms.TextBox textBoxToolLib;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label labelService2;
@@ -619,5 +657,11 @@
         private System.Windows.Forms.TextBox textBox9;
         private System.Windows.Forms.TabPage tabPageBillingStatements;
         private System.Windows.Forms.TabPage tabPageThisWeek;
+        private System.Windows.Forms.ComboBox comboBoxServiceslib;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Button buttonRemoveAdditionalService;
+        private System.Windows.Forms.Button buttonAddAdditionalServiceLib;
+        private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.Button buttonPaid;
     }
 }
