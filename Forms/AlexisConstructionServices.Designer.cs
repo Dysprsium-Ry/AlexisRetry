@@ -30,7 +30,7 @@
         {
             this.panelTop = new System.Windows.Forms.Panel();
             this.label9 = new System.Windows.Forms.Label();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabControlMain = new System.Windows.Forms.TabControl();
             this.tabPageServices = new System.Windows.Forms.TabPage();
             this.textBox10 = new System.Windows.Forms.TextBox();
             this.textBox9 = new System.Windows.Forms.TextBox();
@@ -78,7 +78,7 @@
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.buttonPaid = new System.Windows.Forms.Button();
             this.panelTop.SuspendLayout();
-            this.tabControl1.SuspendLayout();
+            this.tabControlMain.SuspendLayout();
             this.tabPageServices.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewToolsInServices)).BeginInit();
             this.tabPageTransactionLogs.SuspendLayout();
@@ -114,20 +114,20 @@
             this.label9.TabIndex = 0;
             this.label9.Text = "Alexis Construction Services";
             // 
-            // tabControl1
+            // tabControlMain
             // 
-            this.tabControl1.Controls.Add(this.tabPageServices);
-            this.tabControl1.Controls.Add(this.tabPageTransactionLogs);
-            this.tabControl1.Controls.Add(this.tabPageClients);
-            this.tabControl1.Controls.Add(this.tabPageOfferedServices);
-            this.tabControl1.Controls.Add(this.tabPageBillingStatements);
-            this.tabControl1.Controls.Add(this.tabPageThisWeek);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(0, 73);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(930, 489);
-            this.tabControl1.TabIndex = 1;
+            this.tabControlMain.Controls.Add(this.tabPageServices);
+            this.tabControlMain.Controls.Add(this.tabPageTransactionLogs);
+            this.tabControlMain.Controls.Add(this.tabPageClients);
+            this.tabControlMain.Controls.Add(this.tabPageOfferedServices);
+            this.tabControlMain.Controls.Add(this.tabPageBillingStatements);
+            this.tabControlMain.Controls.Add(this.tabPageThisWeek);
+            this.tabControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControlMain.Location = new System.Drawing.Point(0, 73);
+            this.tabControlMain.Name = "tabControlMain";
+            this.tabControlMain.SelectedIndex = 0;
+            this.tabControlMain.Size = new System.Drawing.Size(930, 489);
+            this.tabControlMain.TabIndex = 1;
             // 
             // tabPageServices
             // 
@@ -585,14 +585,14 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(930, 562);
-            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.tabControlMain);
             this.Controls.Add(this.panelTop);
             this.Name = "AlexisConstructionServices";
             this.Text = "AlexisConstructionServices";
             this.Load += new System.EventHandler(this.AlexisConstructionServices_Load);
             this.panelTop.ResumeLayout(false);
             this.panelTop.PerformLayout();
-            this.tabControl1.ResumeLayout(false);
+            this.tabControlMain.ResumeLayout(false);
             this.tabPageServices.ResumeLayout(false);
             this.tabPageServices.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewToolsInServices)).EndInit();
@@ -615,7 +615,7 @@
         #endregion
 
         private System.Windows.Forms.Panel panelTop;
-        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabControl tabControlMain;
         private System.Windows.Forms.TabPage tabPageServices;
         private System.Windows.Forms.TabPage tabPageTransactionLogs;
         private System.Windows.Forms.TabPage tabPageClients;

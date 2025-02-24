@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\BillingStatement.cs" />
+    <Compile Include="Classes\Clients.cs" />
+    <Compile Include="Classes\Services.cs" />
+    <Compile Include="Classes\ServicesLibrary.cs" />
+    <Compile Include="Classes\transactionlogs.cs" />
+    <Compile Include="Classes\WeeklySchedule.cs" />
     <Compile Include="Forms\3_b.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -89,7 +95,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Classes\" />
     <Folder Include="Objects\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
