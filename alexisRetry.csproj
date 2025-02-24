@@ -34,6 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -52,6 +53,7 @@
     <Compile Include="Classes\ServicesLibrary.cs" />
     <Compile Include="Classes\transactionlogs.cs" />
     <Compile Include="Classes\WeeklySchedule.cs" />
+    <Compile Include="Database Connection\Database.cs" />
     <Compile Include="Forms\3_b.cs">
       <SubType>Form</SubType>
     </Compile>
