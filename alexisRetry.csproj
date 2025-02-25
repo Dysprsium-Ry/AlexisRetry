@@ -48,8 +48,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\BillingStatement.cs" />
-    <Compile Include="Classes\Clients.cs" />
-    <Compile Include="Classes\Services.cs" />
+    <Compile Include="Classes\Client.cs" />
+    <Compile Include="Classes\ClientClass.cs" />
+    <Compile Include="Classes\ServicesClass.cs" />
     <Compile Include="Classes\ServicesLibrary.cs" />
     <Compile Include="Classes\transactionlogs.cs" />
     <Compile Include="Classes\WeeklySchedule.cs" />
@@ -66,6 +67,8 @@
     <Compile Include="Forms\AlexisConstructionServices.Designer.cs">
       <DependentUpon>AlexisConstructionServices.cs</DependentUpon>
     </Compile>
+    <Compile Include="Objects\ClientObjects.cs" />
+    <Compile Include="Objects\ServiceObjects.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\3_b.resx">
@@ -96,8 +99,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Objects\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

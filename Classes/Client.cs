@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace alexisRetry.Classes
 {
-    public static class Clients
+    public static class Client
     {
     }
 }

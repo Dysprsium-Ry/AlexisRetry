@@ -32,15 +32,13 @@
             this.label9 = new System.Windows.Forms.Label();
             this.tabControlMain = new System.Windows.Forms.TabControl();
             this.tabPageServices = new System.Windows.Forms.TabPage();
-            this.textBox10 = new System.Windows.Forms.TextBox();
-            this.textBox9 = new System.Windows.Forms.TextBox();
+            this.textBoxServiceFee = new System.Windows.Forms.TextBox();
+            this.textBoxHoursRendered = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
-            this.labelService2 = new System.Windows.Forms.Label();
             this.labelService1 = new System.Windows.Forms.Label();
             this.dataGridViewToolsInServices = new System.Windows.Forms.DataGridView();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.comboBoxServiceBook = new System.Windows.Forms.ComboBox();
             this.tabPageTransactionLogs = new System.Windows.Forms.TabPage();
             this.buttonTransactionDelete = new System.Windows.Forms.Button();
             this.buttonTransactionEdit = new System.Windows.Forms.Button();
@@ -77,6 +75,12 @@
             this.buttonAddAdditionalServiceLib = new System.Windows.Forms.Button();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.buttonPaid = new System.Windows.Forms.Button();
+            this.buttonBookService = new System.Windows.Forms.Button();
+            this.buttonCancelBook = new System.Windows.Forms.Button();
+            this.labelReservationDate = new System.Windows.Forms.Label();
+            this.dateTimePickerReservationDate = new System.Windows.Forms.DateTimePicker();
+            this.labelClientUsername = new System.Windows.Forms.Label();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.panelTop.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.tabPageServices.SuspendLayout();
@@ -131,17 +135,21 @@
             // 
             // tabPageServices
             // 
+            this.tabPageServices.Controls.Add(this.labelClientUsername);
+            this.tabPageServices.Controls.Add(this.comboBox2);
+            this.tabPageServices.Controls.Add(this.dateTimePickerReservationDate);
+            this.tabPageServices.Controls.Add(this.labelReservationDate);
+            this.tabPageServices.Controls.Add(this.buttonCancelBook);
+            this.tabPageServices.Controls.Add(this.buttonBookService);
             this.tabPageServices.Controls.Add(this.buttonRemoveAdditionalService);
             this.tabPageServices.Controls.Add(this.buttonAddAdditionalServiceLib);
-            this.tabPageServices.Controls.Add(this.textBox10);
-            this.tabPageServices.Controls.Add(this.textBox9);
+            this.tabPageServices.Controls.Add(this.textBoxServiceFee);
+            this.tabPageServices.Controls.Add(this.textBoxHoursRendered);
             this.tabPageServices.Controls.Add(this.label13);
             this.tabPageServices.Controls.Add(this.label12);
-            this.tabPageServices.Controls.Add(this.labelService2);
             this.tabPageServices.Controls.Add(this.labelService1);
             this.tabPageServices.Controls.Add(this.dataGridViewToolsInServices);
-            this.tabPageServices.Controls.Add(this.comboBox2);
-            this.tabPageServices.Controls.Add(this.comboBox1);
+            this.tabPageServices.Controls.Add(this.comboBoxServiceBook);
             this.tabPageServices.Location = new System.Drawing.Point(4, 22);
             this.tabPageServices.Name = "tabPageServices";
             this.tabPageServices.Padding = new System.Windows.Forms.Padding(3);
@@ -150,26 +158,26 @@
             this.tabPageServices.Text = "Services";
             this.tabPageServices.UseVisualStyleBackColor = true;
             // 
-            // textBox10
+            // textBoxServiceFee
             // 
-            this.textBox10.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox10.Location = new System.Drawing.Point(98, 269);
-            this.textBox10.Name = "textBox10";
-            this.textBox10.Size = new System.Drawing.Size(220, 30);
-            this.textBox10.TabIndex = 10;
+            this.textBoxServiceFee.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxServiceFee.Location = new System.Drawing.Point(57, 386);
+            this.textBoxServiceFee.Name = "textBoxServiceFee";
+            this.textBoxServiceFee.Size = new System.Drawing.Size(246, 30);
+            this.textBoxServiceFee.TabIndex = 4;
             // 
-            // textBox9
+            // textBoxHoursRendered
             // 
-            this.textBox9.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox9.Location = new System.Drawing.Point(98, 202);
-            this.textBox9.Name = "textBox9";
-            this.textBox9.Size = new System.Drawing.Size(220, 30);
-            this.textBox9.TabIndex = 9;
+            this.textBoxHoursRendered.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxHoursRendered.Location = new System.Drawing.Point(57, 304);
+            this.textBoxHoursRendered.Name = "textBoxHoursRendered";
+            this.textBoxHoursRendered.Size = new System.Drawing.Size(246, 30);
+            this.textBoxHoursRendered.TabIndex = 3;
             // 
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(89, 253);
+            this.label13.Location = new System.Drawing.Point(47, 370);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(25, 13);
             this.label13.TabIndex = 8;
@@ -178,29 +186,20 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(89, 186);
+            this.label12.Location = new System.Drawing.Point(47, 288);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(85, 13);
             this.label12.TabIndex = 7;
             this.label12.Text = "Hours Rendered";
             // 
-            // labelService2
-            // 
-            this.labelService2.AutoSize = true;
-            this.labelService2.Location = new System.Drawing.Point(89, 118);
-            this.labelService2.Name = "labelService2";
-            this.labelService2.Size = new System.Drawing.Size(49, 13);
-            this.labelService2.TabIndex = 6;
-            this.labelService2.Text = "Service2";
-            // 
             // labelService1
             // 
             this.labelService1.AutoSize = true;
-            this.labelService1.Location = new System.Drawing.Point(89, 45);
+            this.labelService1.Location = new System.Drawing.Point(47, 120);
             this.labelService1.Name = "labelService1";
-            this.labelService1.Size = new System.Drawing.Size(52, 13);
+            this.labelService1.Size = new System.Drawing.Size(43, 13);
             this.labelService1.TabIndex = 5;
-            this.labelService1.Text = "Service 1";
+            this.labelService1.Text = "Service";
             // 
             // dataGridViewToolsInServices
             // 
@@ -213,23 +212,15 @@
             this.dataGridViewToolsInServices.Size = new System.Drawing.Size(404, 386);
             this.dataGridViewToolsInServices.TabIndex = 4;
             // 
-            // comboBox2
+            // comboBoxServiceBook
             // 
-            this.comboBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(98, 134);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(220, 33);
-            this.comboBox2.TabIndex = 1;
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(98, 64);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(220, 33);
-            this.comboBox1.TabIndex = 0;
+            this.comboBoxServiceBook.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBoxServiceBook.FormattingEnabled = true;
+            this.comboBoxServiceBook.Location = new System.Drawing.Point(58, 139);
+            this.comboBoxServiceBook.Name = "comboBoxServiceBook";
+            this.comboBoxServiceBook.Size = new System.Drawing.Size(246, 33);
+            this.comboBoxServiceBook.TabIndex = 1;
+            this.comboBoxServiceBook.TextChanged += new System.EventHandler(this.comboBoxServiceBook_TextChanged);
             // 
             // tabPageTransactionLogs
             // 
@@ -547,19 +538,19 @@
             // 
             // buttonRemoveAdditionalService
             // 
-            this.buttonRemoveAdditionalService.Location = new System.Drawing.Point(98, 381);
+            this.buttonRemoveAdditionalService.Location = new System.Drawing.Point(353, 390);
             this.buttonRemoveAdditionalService.Name = "buttonRemoveAdditionalService";
-            this.buttonRemoveAdditionalService.Size = new System.Drawing.Size(220, 35);
-            this.buttonRemoveAdditionalService.TabIndex = 27;
+            this.buttonRemoveAdditionalService.Size = new System.Drawing.Size(100, 35);
+            this.buttonRemoveAdditionalService.TabIndex = 8;
             this.buttonRemoveAdditionalService.Text = "Remove Service";
             this.buttonRemoveAdditionalService.UseVisualStyleBackColor = true;
             // 
             // buttonAddAdditionalServiceLib
             // 
-            this.buttonAddAdditionalServiceLib.Location = new System.Drawing.Point(98, 340);
+            this.buttonAddAdditionalServiceLib.Location = new System.Drawing.Point(353, 348);
             this.buttonAddAdditionalServiceLib.Name = "buttonAddAdditionalServiceLib";
-            this.buttonAddAdditionalServiceLib.Size = new System.Drawing.Size(220, 35);
-            this.buttonAddAdditionalServiceLib.TabIndex = 26;
+            this.buttonAddAdditionalServiceLib.Size = new System.Drawing.Size(100, 35);
+            this.buttonAddAdditionalServiceLib.TabIndex = 7;
             this.buttonAddAdditionalServiceLib.Text = "Add More Service";
             this.buttonAddAdditionalServiceLib.UseVisualStyleBackColor = true;
             // 
@@ -579,6 +570,65 @@
             this.buttonPaid.TabIndex = 1;
             this.buttonPaid.Text = "Paid";
             this.buttonPaid.UseVisualStyleBackColor = true;
+            // 
+            // buttonBookService
+            // 
+            this.buttonBookService.Location = new System.Drawing.Point(353, 266);
+            this.buttonBookService.Name = "buttonBookService";
+            this.buttonBookService.Size = new System.Drawing.Size(100, 35);
+            this.buttonBookService.TabIndex = 5;
+            this.buttonBookService.Text = "Book";
+            this.buttonBookService.UseVisualStyleBackColor = true;
+            this.buttonBookService.Click += new System.EventHandler(this.buttonBookService_Click);
+            // 
+            // buttonCancelBook
+            // 
+            this.buttonCancelBook.Location = new System.Drawing.Point(353, 307);
+            this.buttonCancelBook.Name = "buttonCancelBook";
+            this.buttonCancelBook.Size = new System.Drawing.Size(100, 35);
+            this.buttonCancelBook.TabIndex = 6;
+            this.buttonCancelBook.Text = "Cancel";
+            this.buttonCancelBook.UseVisualStyleBackColor = true;
+            // 
+            // labelReservationDate
+            // 
+            this.labelReservationDate.AutoSize = true;
+            this.labelReservationDate.Location = new System.Drawing.Point(47, 212);
+            this.labelReservationDate.Name = "labelReservationDate";
+            this.labelReservationDate.Size = new System.Drawing.Size(90, 13);
+            this.labelReservationDate.TabIndex = 30;
+            this.labelReservationDate.Text = "Reservation Date";
+            // 
+            // dateTimePickerReservationDate
+            // 
+            this.dateTimePickerReservationDate.CalendarFont = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dateTimePickerReservationDate.CustomFormat = "MMMM dd,  yyyy";
+            this.dateTimePickerReservationDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dateTimePickerReservationDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePickerReservationDate.Location = new System.Drawing.Point(58, 229);
+            this.dateTimePickerReservationDate.MinDate = new System.DateTime(2025, 2, 25, 0, 0, 0, 0);
+            this.dateTimePickerReservationDate.Name = "dateTimePickerReservationDate";
+            this.dateTimePickerReservationDate.Size = new System.Drawing.Size(246, 26);
+            this.dateTimePickerReservationDate.TabIndex = 2;
+            this.dateTimePickerReservationDate.Value = new System.DateTime(2025, 2, 25, 9, 17, 9, 0);
+            // 
+            // labelClientUsername
+            // 
+            this.labelClientUsername.AutoSize = true;
+            this.labelClientUsername.Location = new System.Drawing.Point(47, 39);
+            this.labelClientUsername.Name = "labelClientUsername";
+            this.labelClientUsername.Size = new System.Drawing.Size(84, 13);
+            this.labelClientUsername.TabIndex = 34;
+            this.labelClientUsername.Text = "Client Username";
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Location = new System.Drawing.Point(58, 58);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(246, 33);
+            this.comboBox2.TabIndex = 33;
             // 
             // AlexisConstructionServices
             // 
@@ -621,8 +671,7 @@
         private System.Windows.Forms.TabPage tabPageClients;
         private System.Windows.Forms.TabPage tabPageOfferedServices;
         private System.Windows.Forms.DataGridView dataGridViewToolsInServices;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox comboBoxServiceBook;
         private System.Windows.Forms.DataGridView dataGridViewTransactionLogs;
         private System.Windows.Forms.Button buttonTransactionDelete;
         private System.Windows.Forms.Button buttonTransactionEdit;
@@ -651,10 +700,9 @@
         private System.Windows.Forms.TextBox textBoxToolLib;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label labelService2;
         private System.Windows.Forms.Label labelService1;
-        private System.Windows.Forms.TextBox textBox10;
-        private System.Windows.Forms.TextBox textBox9;
+        private System.Windows.Forms.TextBox textBoxServiceFee;
+        private System.Windows.Forms.TextBox textBoxHoursRendered;
         private System.Windows.Forms.TabPage tabPageBillingStatements;
         private System.Windows.Forms.TabPage tabPageThisWeek;
         private System.Windows.Forms.ComboBox comboBoxServiceslib;
@@ -663,5 +711,11 @@
         private System.Windows.Forms.Button buttonAddAdditionalServiceLib;
         private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.Button buttonPaid;
+        private System.Windows.Forms.Button buttonCancelBook;
+        private System.Windows.Forms.Button buttonBookService;
+        private System.Windows.Forms.DateTimePicker dateTimePickerReservationDate;
+        private System.Windows.Forms.Label labelReservationDate;
+        private System.Windows.Forms.Label labelClientUsername;
+        private System.Windows.Forms.ComboBox comboBox2;
     }
 }

@@ -15,7 +15,7 @@ namespace alexisRetry.Database_Connection
 
     public static class DatabaseConnection
     {
-        public static SqlConnection CreateConnection()
+        public static SqlConnection Establish()
         {
             var connection = new SqlConnection(Database.Connectionstring);
             connection.Open();
