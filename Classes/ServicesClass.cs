@@ -34,19 +34,26 @@ namespace alexisRetry.Classes
 
         public static void ServiceBooking()
         {
-            using (SqlConnection connection = DatabaseConnection.Establish())
+            try
             {
-                using (SqlCommand command = new SqlCommand("INSERT INTO D1.TransactionLogs (UserID, Username, Service, DateBooked, TimeRender, pHourFee, PaymentStatus) VALUES(@userId, @username, @service, @datebooked, @timerender, @pHourFee, @paymentstatus)", connection))
+                using (SqlConnection connection = DatabaseConnection.Establish())
                 {
-                    command.Parameters.AddWithValue("@userId", );
-                    command.Parameters.AddWithValue("@username", );
-                    command.Parameters.AddWithValue("@service", );
-                    command.Parameters.AddWithValue("@datebooked", );
-                    command.Parameters.AddWithValue("@timerender",);
-                    command.Parameters.AddWithValue("@pHourFee", );
-                    command.Parameters.AddWithValue("@paymentStatus", "Pending");
+                    using (SqlCommand command = new SqlCommand("INSERT INTO D1.TransactionLogs (UserID, Username, Service, DateBooked, TimeRender, pHourFee, PaymentStatus) VALUES(@userId, @username, @service, @datebooked, @timerender, @pHourFee, @paymentstatus)", connection))
+                    {
+                        command.Parameters.AddWithValue("@userId", ClientObjects.ClientId);
+                        command.Parameters.AddWithValue("@username", ServiceObjects.Clientusername);
+                        command.Parameters.AddWithValue("@service", ServiceObjects.Service);
+                        command.Parameters.AddWithValue("@datebooked", ServiceObjects.BookedDate);
+                        command.Parameters.AddWithValue("@timerender", ServiceObjects.HoursRented);
+                        command.Parameters.AddWithValue("@pHourFee", ServiceObjects.Fee);
+                        command.Parameters.AddWithValue("@paymentStatus", "Pending");
+                        command.ExecuteNonQuery();
+
+                        MessageBox.Show("Booked Succesfully", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                 }
             }
+            catch { ServiceValidator.BookingSuccess = false; }
         }
     }
 }

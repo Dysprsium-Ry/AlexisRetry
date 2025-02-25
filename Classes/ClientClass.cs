@@ -12,9 +12,6 @@ namespace alexisRetry.Classes
 {
     public static class ClientClass
     {
-
-        public static List<ClientObjects> clientUsername { get; set; } = new List<ClientObjects>();
-
         public static void ClientsList()
         {
             using (SqlConnection connection = DatabaseConnection.Establish())
@@ -29,6 +26,22 @@ namespace alexisRetry.Classes
                             clientusernames.Add(reader.GetString(1));
                         }
                         ClientObjects.ClientUsername = clientusernames.ToArray();
+                    }
+                }
+            }
+        }
+
+        public static void ClientIdList()
+        {
+            using (SqlConnection connection = DatabaseConnection.Establish())
+            {
+                using (SqlCommand command = new SqlCommand("SELECT ClientId FROM D1.Clients WHERE Username = @Username", connection))
+                {
+                    command.Parameters.AddWithValue("@Username", ClientObjects.ClientUsername);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        ClientObjects.ClientId = reader.GetInt32(0);
                     }
                 }
             }

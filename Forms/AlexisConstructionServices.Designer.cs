@@ -80,7 +80,7 @@
             this.labelReservationDate = new System.Windows.Forms.Label();
             this.dateTimePickerReservationDate = new System.Windows.Forms.DateTimePicker();
             this.labelClientUsername = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.comboBoxClientUsername = new System.Windows.Forms.ComboBox();
             this.panelTop.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.tabPageServices.SuspendLayout();
@@ -136,7 +136,7 @@
             // tabPageServices
             // 
             this.tabPageServices.Controls.Add(this.labelClientUsername);
-            this.tabPageServices.Controls.Add(this.comboBox2);
+            this.tabPageServices.Controls.Add(this.comboBoxClientUsername);
             this.tabPageServices.Controls.Add(this.dateTimePickerReservationDate);
             this.tabPageServices.Controls.Add(this.labelReservationDate);
             this.tabPageServices.Controls.Add(this.buttonCancelBook);
@@ -621,14 +621,15 @@
             this.labelClientUsername.TabIndex = 34;
             this.labelClientUsername.Text = "Client Username";
             // 
-            // comboBox2
+            // comboBoxClientUsername
             // 
-            this.comboBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(58, 58);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(246, 33);
-            this.comboBox2.TabIndex = 33;
+            this.comboBoxClientUsername.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBoxClientUsername.FormattingEnabled = true;
+            this.comboBoxClientUsername.Location = new System.Drawing.Point(58, 58);
+            this.comboBoxClientUsername.Name = "comboBoxClientUsername";
+            this.comboBoxClientUsername.Size = new System.Drawing.Size(246, 33);
+            this.comboBoxClientUsername.TabIndex = 33;
+            this.comboBoxClientUsername.SelectedValueChanged += new System.EventHandler(this.comboBoxClientUsername_SelectedValueChanged);
             // 
             // AlexisConstructionServices
             // 
@@ -716,6 +717,6 @@
         private System.Windows.Forms.DateTimePicker dateTimePickerReservationDate;
         private System.Windows.Forms.Label labelReservationDate;
         private System.Windows.Forms.Label labelClientUsername;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox comboBoxClientUsername;
     }
 }
