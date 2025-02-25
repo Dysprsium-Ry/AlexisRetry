@@ -1,12 +1,8 @@
 ﻿using alexisRetry.Database_Connection;
 using alexisRetry.Objects;
-using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Runtime.Remoting;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace alexisRetry.Classes
 {
@@ -37,12 +33,45 @@ namespace alexisRetry.Classes
             {
                 using (SqlCommand command = new SqlCommand("SELECT ClientId FROM D1.Clients WHERE Username = @Username", connection))
                 {
-                    command.Parameters.AddWithValue("@Username", ClientObjects.ClientUsername);
-
-                    using (SqlDataReader reader = command.ExecuteReader())
+                    command.Parameters.AddWithValue("@Username", ServiceObjects.Clientusername);
+                    try
                     {
-                        ClientObjects.ClientId = reader.GetInt32(0);
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                ClientObjects.ClientId = reader.GetInt32(0);
+                            }
+                        }
                     }
+                    catch { }
+                }
+            }
+        }
+
+        public static void AddClient()
+        {
+            using(SqlConnection connection = DatabaseConnection.Establish())
+            {
+                using (SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM D1.Clients WHERE Username = @username OR Email = @email", connection))
+                {
+                    command.Parameters.AddWithValue("@username", ClientRegister.username);
+                    command.Parameters.AddWithValue("@email", ClientRegister.email);
+
+                    int isValid = (int)command.ExecuteScalar();
+
+                    if (isValid > 0) { MessageBox.Show("Username or Email already exist", "Account Existing", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); return; }
+                }
+
+                using (SqlCommand command = new SqlCommand("INSERT INTO D1.Clients (Username, Email, PhoneNumber, Name) VALUES(@username, @email, @phonenumber, @name)", connection))
+                {
+                    command.Parameters.AddWithValue("@username", ClientRegister.username);
+                    command.Parameters.AddWithValue("@email", ClientRegister.email);
+                    command.Parameters.AddWithValue("@phonenumber", ClientRegister.PhoneNumber);
+                    command.Parameters.AddWithValue("@name", ClientRegister.name);
+                    command.ExecuteNonQuery();
+
+                    MessageBox.Show("Account Successfully Registered!", "Registration Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }

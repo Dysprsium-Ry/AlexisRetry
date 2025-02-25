@@ -11,15 +11,23 @@ namespace alexisRetry.Objects
     public class ServiceObjects
     {
         public static string Clientusername { get; set; }
-        public static string Service { get; set; }
+        public static string[] Service { get; set; }
         public static DateTime BookedDate { get; set; }
         public static int HoursRented { get; set; }
         public static int Fee { get; set; }
-        //public static List<ServiceObjects> Services { get; set; }
     }
 
     public class ServiceValidator
     {
         public static bool BookingSuccess { get; set; }
+    }
+
+    public class serviceBooking
+    {
+        public static string clientUsername { get; set; }
+        public static string Service { get; set; }
+        public static DateTime BookedDate { get; set; }
+        public static int HoursRented { get; set; }
+        public static int Fee { get; set; }
     }
 }

@@ -11,4 +11,12 @@ namespace alexisRetry.Objects
         public static int ClientId { get; set; }
         public static string[] ClientUsername { get; set; }
     }
+
+    public class ClientRegister
+    {
+        public static string username { get; set; }
+        public static string email { get; set; }
+        public static long PhoneNumber { get; set; }
+        public static string name { get; set; }
+    }
 }
