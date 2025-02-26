@@ -49,7 +49,6 @@
             this.comboBoxServiceBook = new System.Windows.Forms.ComboBox();
             this.tabPageTransactionLogs = new System.Windows.Forms.TabPage();
             this.buttonTransactionDelete = new System.Windows.Forms.Button();
-            this.buttonTransactionEdit = new System.Windows.Forms.Button();
             this.buttonTransactionAdd = new System.Windows.Forms.Button();
             this.dataGridViewTransactionLogs = new System.Windows.Forms.DataGridView();
             this.tabPageClients = new System.Windows.Forms.TabPage();
@@ -285,6 +284,8 @@
             // 
             this.dataGridViewToolsInServices.AllowUserToAddRows = false;
             this.dataGridViewToolsInServices.AllowUserToDeleteRows = false;
+            this.dataGridViewToolsInServices.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewToolsInServices.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
             this.dataGridViewToolsInServices.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewToolsInServices.Location = new System.Drawing.Point(480, 39);
             this.dataGridViewToolsInServices.Name = "dataGridViewToolsInServices";
@@ -305,7 +306,6 @@
             // tabPageTransactionLogs
             // 
             this.tabPageTransactionLogs.Controls.Add(this.buttonTransactionDelete);
-            this.tabPageTransactionLogs.Controls.Add(this.buttonTransactionEdit);
             this.tabPageTransactionLogs.Controls.Add(this.buttonTransactionAdd);
             this.tabPageTransactionLogs.Controls.Add(this.dataGridViewTransactionLogs);
             this.tabPageTransactionLogs.Location = new System.Drawing.Point(4, 22);
@@ -325,28 +325,22 @@
             this.buttonTransactionDelete.Text = "Delete";
             this.buttonTransactionDelete.UseVisualStyleBackColor = true;
             // 
-            // buttonTransactionEdit
-            // 
-            this.buttonTransactionEdit.Location = new System.Drawing.Point(778, 356);
-            this.buttonTransactionEdit.Name = "buttonTransactionEdit";
-            this.buttonTransactionEdit.Size = new System.Drawing.Size(124, 36);
-            this.buttonTransactionEdit.TabIndex = 2;
-            this.buttonTransactionEdit.Text = "Edit";
-            this.buttonTransactionEdit.UseVisualStyleBackColor = true;
-            // 
             // buttonTransactionAdd
             // 
-            this.buttonTransactionAdd.Location = new System.Drawing.Point(778, 312);
+            this.buttonTransactionAdd.Location = new System.Drawing.Point(778, 356);
             this.buttonTransactionAdd.Name = "buttonTransactionAdd";
             this.buttonTransactionAdd.Size = new System.Drawing.Size(124, 36);
             this.buttonTransactionAdd.TabIndex = 1;
             this.buttonTransactionAdd.Text = "Add";
             this.buttonTransactionAdd.UseVisualStyleBackColor = true;
+            this.buttonTransactionAdd.Click += new System.EventHandler(this.buttonTransactionAdd_Click);
             // 
             // dataGridViewTransactionLogs
             // 
             this.dataGridViewTransactionLogs.AllowUserToAddRows = false;
             this.dataGridViewTransactionLogs.AllowUserToDeleteRows = false;
+            this.dataGridViewTransactionLogs.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewTransactionLogs.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dataGridViewTransactionLogs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewTransactionLogs.Location = new System.Drawing.Point(35, 22);
             this.dataGridViewTransactionLogs.Name = "dataGridViewTransactionLogs";
@@ -476,6 +470,8 @@
             // 
             this.dataGridViewClients.AllowUserToAddRows = false;
             this.dataGridViewClients.AllowUserToDeleteRows = false;
+            this.dataGridViewClients.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewClients.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
             this.dataGridViewClients.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewClients.Location = new System.Drawing.Point(35, 22);
             this.dataGridViewClients.Name = "dataGridViewClients";
@@ -584,6 +580,8 @@
             // 
             // dataGridViewServiceLibrary
             // 
+            this.dataGridViewServiceLibrary.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewServiceLibrary.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dataGridViewServiceLibrary.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewServiceLibrary.Location = new System.Drawing.Point(473, 29);
             this.dataGridViewServiceLibrary.Name = "dataGridViewServiceLibrary";
@@ -680,7 +678,6 @@
         private System.Windows.Forms.ComboBox comboBoxServiceBook;
         private System.Windows.Forms.DataGridView dataGridViewTransactionLogs;
         private System.Windows.Forms.Button buttonTransactionDelete;
-        private System.Windows.Forms.Button buttonTransactionEdit;
         private System.Windows.Forms.Button buttonTransactionAdd;
         private System.Windows.Forms.TextBox textBoxClientName;
         private System.Windows.Forms.TextBox textBoxClientPhoneNumber;

@@ -68,8 +68,6 @@ namespace alexisRetry.Forms
             {
                 MessageBox.Show("Booking Failed, unexpected error occurred.", "Error", MessageBoxButtons.RetryCancel);
             }
-
-            //registerService();
         }
 
         private void comboBoxServiceBook_TextChanged(object sender, EventArgs e)
@@ -122,7 +120,10 @@ namespace alexisRetry.Forms
             ClientClass.ClientsList();
             ServicesClass.ViewToolsinService(dataGridViewToolsInServices);
             ServiceLibraryClass.ServiceLib(dataGridViewServiceLibrary);
+            transactionlogs.transactionlogsdGV(dataGridViewTransactionLogs);
+            comboBoxServiceBook.DataSource = ServiceObjects.Service;
             comboBoxClientUsername.DataSource = ClientObjects.ClientUsername;
+            comboBoxServiceslib.DataSource = ServiceObjects.Service;
         }
         #endregion
 
@@ -137,5 +138,10 @@ namespace alexisRetry.Forms
             refresh();
         }
         #endregion
+
+        private void buttonTransactionAdd_Click(object sender, EventArgs e)
+        {
+            tabControlMain.SelectedIndex = 0;
+        }
     }
 }

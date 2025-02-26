@@ -8,6 +8,11 @@ using System.Threading.Tasks;
 
 namespace alexisRetry.Objects
 {
+    public class Objects
+    {
+
+    }
+
     public class ServiceObjects
     {
         public static string Clientusername { get; set; }
@@ -29,5 +34,25 @@ namespace alexisRetry.Objects
         public static DateTime BookedDate { get; set; }
         public static int HoursRented { get; set; }
         public static int Fee { get; set; }
+    }
+    public class ClientObjects
+    {
+        public static int ClientId { get; set; }
+        public static string[] ClientUsername { get; set; }
+    }
+
+    public class ClientRegister
+    {
+        public static string username { get; set; }
+        public static string email { get; set; }
+        public static long PhoneNumber { get; set; }
+        public static string name { get; set; }
+    }
+
+    public class ServiceLibraryObject
+    {
+        public static string service { get; set; }
+        public static string tool { get; set; }
+        public static int fee { get; set; }
     }
 }

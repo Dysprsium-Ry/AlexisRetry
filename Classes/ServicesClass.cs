@@ -25,7 +25,10 @@ namespace alexisRetry.Classes
                         List<string> services = new List<string>();
                         while (reader.Read())
                         {
-                            services.Add(reader.GetString(0));
+                            if (!services.Contains(reader.GetString(0)))
+                            {
+                                services.Add(reader.GetString(0));
+                            }
                         }
                         ServiceObjects.Service = services.ToArray();
                     }

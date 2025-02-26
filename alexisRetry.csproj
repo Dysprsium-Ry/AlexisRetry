@@ -67,9 +67,7 @@
     <Compile Include="Forms\AlexisConstructionServices.Designer.cs">
       <DependentUpon>AlexisConstructionServices.cs</DependentUpon>
     </Compile>
-    <Compile Include="Objects\ClientObjects.cs" />
-    <Compile Include="Objects\ServiceLibraryObject.cs" />
-    <Compile Include="Objects\ServiceObjects.cs" />
+    <Compile Include="Objects\Objects.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\3_b.resx">
