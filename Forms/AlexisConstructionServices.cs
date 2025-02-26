@@ -74,6 +74,7 @@ namespace alexisRetry.Forms
 
         private void comboBoxServiceBook_TextChanged(object sender, EventArgs e)
         {
+            serviceBooking.Service = comboBoxServiceBook.Text;
             ServicesClass.ViewToolsinService(dataGridViewToolsInServices);
         }
 
@@ -119,6 +120,8 @@ namespace alexisRetry.Forms
         {
             ServicesClass.ServicesLoad();
             ClientClass.ClientsList();
+            ServicesClass.ViewToolsinService(dataGridViewToolsInServices);
+            ServiceLibraryClass.ServiceLib(dataGridViewServiceLibrary);
             comboBoxClientUsername.DataSource = ClientObjects.ClientUsername;
         }
         #endregion
@@ -131,6 +134,7 @@ namespace alexisRetry.Forms
             ServiceLibraryObject.fee = Convert.ToInt32(textBoxFeepHourLib.Text);
 
             ServiceLibraryClass.LibLoader();
+            refresh();
         }
         #endregion
     }
