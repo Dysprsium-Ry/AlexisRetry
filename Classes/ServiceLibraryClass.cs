@@ -1,12 +1,7 @@
 ﻿using alexisRetry.Database_Connection;
 using alexisRetry.Objects;
-using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace alexisRetry.Classes
@@ -32,14 +27,32 @@ namespace alexisRetry.Classes
         {
             using (SqlConnection connection = DatabaseConnection.Establish())
             {
-                using (SqlCommand command = new SqlCommand("SELECT Service, Tool FROM D1.Services", connection))
+                if (ServiceLibraryObject.service != null)
                 {
-                    using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                    using (SqlCommand command = new SqlCommand("SELECT Tool FROM D1.Services WHERE Service = @service", connection))
                     {
-                        DataTable table = new DataTable();
-                        adapter.Fill(table);
-                        dataGrid.AutoGenerateColumns = true;
-                        dataGrid.DataSource = table;
+                        command.Parameters.AddWithValue("@service", ServiceLibraryObject.service);
+
+                        using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                        {
+                            DataTable table = new DataTable();
+                            adapter.Fill(table);
+                            dataGrid.AutoGenerateColumns = true;
+                            dataGrid.DataSource = table;
+                        }
+                    }
+                }
+                else
+                {
+                    using (SqlCommand command = new SqlCommand("SELECT Tool FROM D1.Services", connection))
+                    {
+                        using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                        {
+                            DataTable table = new DataTable();
+                            adapter.Fill(table);
+                            dataGrid.AutoGenerateColumns = true;
+                            dataGrid.DataSource = table;
+                        }
                     }
                 }
             }

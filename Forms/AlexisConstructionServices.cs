@@ -1,7 +1,6 @@
 ﻿using alexisRetry.Classes;
 using alexisRetry.Objects;
 using System;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace alexisRetry.Forms
@@ -46,7 +45,7 @@ namespace alexisRetry.Forms
                 return;
             }
 
-            if(ClientObjects.ClientId == 0)
+            if (ClientObjects.ClientId == 0)
             {
                 ClientObjects.ClientId = 1;
             }
@@ -116,14 +115,25 @@ namespace alexisRetry.Forms
 
         private void refresh()
         {
+            #region serviceTab
             ServicesClass.ServicesLoad();
-            ClientClass.ClientsList();
             ServicesClass.ViewToolsinService(dataGridViewToolsInServices);
-            ServiceLibraryClass.ServiceLib(dataGridViewServiceLibrary);
-            transactionlogs.transactionlogsdGV(dataGridViewTransactionLogs);
-            comboBoxServiceBook.DataSource = ServiceObjects.Service;
+
+            #endregion
+
+            #region clientTab
+            ClientClass.ClientsList();
             comboBoxClientUsername.DataSource = ClientObjects.ClientUsername;
+            #endregion
+
+            #region serviceLibTab
             comboBoxServiceslib.DataSource = ServiceObjects.Service;
+            ServiceLibraryClass.ServiceLib(dataGridViewServiceLibrary);
+            #endregion
+
+            #region transactionLogsTab
+            transactionlogs.transactionlogsdGV(dataGridViewTransactionLogs);
+            #endregion
         }
         #endregion
 
