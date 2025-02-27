@@ -13,6 +13,18 @@ namespace alexisRetry.Objects
 
     }
 
+    #region service
+    #endregion
+
+    #region client
+    #endregion
+
+    #region ServiceLib
+    #endregion
+
+    #region transactionLogs
+    #endregion
+
     public class ServiceObjects
     {
         public static string Clientusername { get; set; }
@@ -54,5 +66,14 @@ namespace alexisRetry.Objects
         public static string service { get; set; }
         public static string tool { get; set; }
         public static int fee { get; set; }
+    }
+
+    public class updateClientInfo
+    {
+        public static int id { get; set; }
+        public static string username { get; set; }
+        public static string email { get; set; }
+        public static long phoneNum { get; set; }
+        public static string name { get; set; }
     }
 }

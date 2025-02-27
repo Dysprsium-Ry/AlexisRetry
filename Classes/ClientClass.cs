@@ -1,6 +1,7 @@
 ﻿using alexisRetry.Database_Connection;
 using alexisRetry.Objects;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
 
@@ -72,6 +73,44 @@ namespace alexisRetry.Classes
                     command.ExecuteNonQuery();
 
                     MessageBox.Show("Account Successfully Registered!", "Registration Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+        }
+        public static void ClientsDtGrid(DataGridView datagrid)
+        {
+            using (SqlConnection connection = DatabaseConnection.Establish())
+            {
+                using (SqlCommand command = new SqlCommand("SELECT * FROM D1.Clients", connection))
+                {
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                    {
+                        try
+                        {
+                            DataTable table = new DataTable();
+                            adapter.Fill(table);
+                            datagrid.AutoGenerateColumns = true;
+                            datagrid.DataSource = table;
+                        }
+                        catch { }
+                    }
+                }
+            }
+        }
+
+        public static void UpdateClientAccount()
+        {
+            using (SqlConnection connection = DatabaseConnection.Establish())
+            {
+                using (SqlCommand command = new SqlCommand("UPDATE D1.Clients SET Username = @username, Email = @email, PhoneNumber = @phonenum, Name = @name WHERE ClientId = @id", connection))
+                {
+                    command.Parameters.AddWithValue("@username", updateClientInfo.username);
+                    command.Parameters.AddWithValue("@email", updateClientInfo.email);
+                    command.Parameters.AddWithValue("@phonenum", updateClientInfo.phoneNum);
+                    command.Parameters.AddWithValue("@name", updateClientInfo.name);
+                    command.Parameters.AddWithValue("@id", updateClientInfo.id);
+                    command.ExecuteNonQuery();
+
+                    MessageBox.Show("Changes applied", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }

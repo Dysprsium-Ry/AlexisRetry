@@ -12,11 +12,10 @@ namespace alexisRetry.Classes
         {
             using (SqlConnection connection = DatabaseConnection.Establish())
             {
-                using (SqlCommand command = new SqlCommand("INSERT INTO D1.Services (Service, Tool, Fee_per_Hour) VALUES(@service, @tool, @feePhour)", connection))
+                using (SqlCommand command = new SqlCommand("INSERT INTO D1.Services (Service, Tool) VALUES(@service, @tool)", connection))
                 {
                     command.Parameters.AddWithValue("@service", ServiceLibraryObject.service);
                     command.Parameters.AddWithValue("@tool", ServiceLibraryObject.tool);
-                    command.Parameters.AddWithValue("@feePhour", ServiceLibraryObject.fee);
                     command.ExecuteNonQuery();
                     MessageBox.Show("Registered!");
                 }

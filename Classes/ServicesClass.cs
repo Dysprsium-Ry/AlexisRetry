@@ -85,16 +85,16 @@ namespace alexisRetry.Classes
             catch { ServiceValidator.BookingSuccess = false; }
         }
         
-        public static void AddServicetoLib()
-        {
-            using (SqlConnection connection = DatabaseConnection.Establish())
-            {
-                using (SqlCommand command = new SqlCommand("INSERT INTO D1.Services (Service, Fee_per_Hour) VALUES (@Service, @FeePHour)", connection))
-                {
-                    command.Parameters.AddWithValue("@Service", serviceBooking.Service);
-                    command.Parameters.AddWithValue("@FeePHour", serviceBooking.Fee);
-                }
-            }
-        }
+        //public static void AddServicetoLib()
+        //{
+        //    using (SqlConnection connection = DatabaseConnection.Establish())
+        //    {
+        //        using (SqlCommand command = new SqlCommand("INSERT INTO D1.Services (Service, Fee_per_Hour) VALUES (@Service, @FeePHour)", connection))
+        //        {
+        //            command.Parameters.AddWithValue("@Service", serviceBooking.Service);
+        //            command.Parameters.AddWithValue("@FeePHour", serviceBooking.Fee);
+        //        }
+        //    }
+        //}
     }
 }

@@ -52,8 +52,8 @@
             this.buttonTransactionAdd = new System.Windows.Forms.Button();
             this.dataGridViewTransactionLogs = new System.Windows.Forms.DataGridView();
             this.tabPageClients = new System.Windows.Forms.TabPage();
+            this.buttonUpdate = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
-            this.buttonClientEdit = new System.Windows.Forms.Button();
             this.buttonClientAdd = new System.Windows.Forms.Button();
             this.labelName = new System.Windows.Forms.Label();
             this.labelPhoneNumber = new System.Windows.Forms.Label();
@@ -66,10 +66,8 @@
             this.dataGridViewClients = new System.Windows.Forms.DataGridView();
             this.tabPageOfferedServices = new System.Windows.Forms.TabPage();
             this.comboBoxServiceslib = new System.Windows.Forms.ComboBox();
-            this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.textBoxFeepHourLib = new System.Windows.Forms.TextBox();
             this.textBoxToolLib = new System.Windows.Forms.TextBox();
             this.buttonDeleteLibItem = new System.Windows.Forms.Button();
             this.buttonEditLibItem = new System.Windows.Forms.Button();
@@ -242,6 +240,7 @@
             this.textBoxServiceFee.Name = "textBoxServiceFee";
             this.textBoxServiceFee.Size = new System.Drawing.Size(246, 30);
             this.textBoxServiceFee.TabIndex = 4;
+            this.textBoxServiceFee.TextChanged += new System.EventHandler(this.textBoxTotalFee_TextChanged);
             this.textBoxServiceFee.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxNumericalTextBox_KeyPress);
             // 
             // textBoxHoursRendered
@@ -251,6 +250,7 @@
             this.textBoxHoursRendered.Name = "textBoxHoursRendered";
             this.textBoxHoursRendered.Size = new System.Drawing.Size(246, 30);
             this.textBoxHoursRendered.TabIndex = 3;
+            this.textBoxHoursRendered.TextChanged += new System.EventHandler(this.textBoxTotalFee_TextChanged);
             this.textBoxHoursRendered.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxNumericalTextBox_KeyPress);
             // 
             // label13
@@ -350,8 +350,8 @@
             // 
             // tabPageClients
             // 
+            this.tabPageClients.Controls.Add(this.buttonUpdate);
             this.tabPageClients.Controls.Add(this.button4);
-            this.tabPageClients.Controls.Add(this.buttonClientEdit);
             this.tabPageClients.Controls.Add(this.buttonClientAdd);
             this.tabPageClients.Controls.Add(this.labelName);
             this.tabPageClients.Controls.Add(this.labelPhoneNumber);
@@ -369,6 +369,16 @@
             this.tabPageClients.Text = "Clients";
             this.tabPageClients.UseVisualStyleBackColor = true;
             // 
+            // buttonUpdate
+            // 
+            this.buttonUpdate.Location = new System.Drawing.Point(672, 359);
+            this.buttonUpdate.Name = "buttonUpdate";
+            this.buttonUpdate.Size = new System.Drawing.Size(222, 28);
+            this.buttonUpdate.TabIndex = 12;
+            this.buttonUpdate.Text = "Update";
+            this.buttonUpdate.UseVisualStyleBackColor = true;
+            this.buttonUpdate.Click += new System.EventHandler(this.buttonUpdate_Click);
+            // 
             // button4
             // 
             this.button4.Location = new System.Drawing.Point(672, 393);
@@ -377,15 +387,6 @@
             this.button4.TabIndex = 11;
             this.button4.Text = "Delete";
             this.button4.UseVisualStyleBackColor = true;
-            // 
-            // buttonClientEdit
-            // 
-            this.buttonClientEdit.Location = new System.Drawing.Point(672, 359);
-            this.buttonClientEdit.Name = "buttonClientEdit";
-            this.buttonClientEdit.Size = new System.Drawing.Size(222, 28);
-            this.buttonClientEdit.TabIndex = 10;
-            this.buttonClientEdit.Text = "Edit";
-            this.buttonClientEdit.UseVisualStyleBackColor = true;
             // 
             // buttonClientAdd
             // 
@@ -478,14 +479,13 @@
             this.dataGridViewClients.ReadOnly = true;
             this.dataGridViewClients.Size = new System.Drawing.Size(608, 415);
             this.dataGridViewClients.TabIndex = 0;
+            this.dataGridViewClients.RowHeaderMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewClients_RowHeaderMouseDoubleClick);
             // 
             // tabPageOfferedServices
             // 
             this.tabPageOfferedServices.Controls.Add(this.comboBoxServiceslib);
-            this.tabPageOfferedServices.Controls.Add(this.label7);
             this.tabPageOfferedServices.Controls.Add(this.label6);
             this.tabPageOfferedServices.Controls.Add(this.label5);
-            this.tabPageOfferedServices.Controls.Add(this.textBoxFeepHourLib);
             this.tabPageOfferedServices.Controls.Add(this.textBoxToolLib);
             this.tabPageOfferedServices.Controls.Add(this.buttonDeleteLibItem);
             this.tabPageOfferedServices.Controls.Add(this.buttonEditLibItem);
@@ -502,24 +502,16 @@
             // 
             this.comboBoxServiceslib.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboBoxServiceslib.FormattingEnabled = true;
-            this.comboBoxServiceslib.Location = new System.Drawing.Point(53, 55);
+            this.comboBoxServiceslib.Location = new System.Drawing.Point(77, 99);
             this.comboBoxServiceslib.Name = "comboBoxServiceslib";
-            this.comboBoxServiceslib.Size = new System.Drawing.Size(303, 32);
+            this.comboBoxServiceslib.Size = new System.Drawing.Size(306, 32);
             this.comboBoxServiceslib.TabIndex = 23;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(50, 244);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(69, 13);
-            this.label7.TabIndex = 21;
-            this.label7.Text = "Fee per Hour";
+            this.comboBoxServiceslib.SelectedIndexChanged += new System.EventHandler(this.comboBoxServiceslib_SelectedIndexChanged);
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(47, 140);
+            this.label6.Location = new System.Drawing.Point(74, 178);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(28, 13);
             this.label6.TabIndex = 20;
@@ -528,31 +520,24 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(50, 39);
+            this.label5.Location = new System.Drawing.Point(77, 83);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(43, 13);
             this.label5.TabIndex = 19;
             this.label5.Text = "Service";
             // 
-            // textBoxFeepHourLib
-            // 
-            this.textBoxFeepHourLib.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxFeepHourLib.Location = new System.Drawing.Point(50, 260);
-            this.textBoxFeepHourLib.Name = "textBoxFeepHourLib";
-            this.textBoxFeepHourLib.Size = new System.Drawing.Size(306, 29);
-            this.textBoxFeepHourLib.TabIndex = 17;
-            // 
             // textBoxToolLib
             // 
             this.textBoxToolLib.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxToolLib.Location = new System.Drawing.Point(50, 156);
+            this.textBoxToolLib.Location = new System.Drawing.Point(77, 194);
             this.textBoxToolLib.Name = "textBoxToolLib";
             this.textBoxToolLib.Size = new System.Drawing.Size(306, 29);
             this.textBoxToolLib.TabIndex = 16;
+            this.textBoxToolLib.TextChanged += new System.EventHandler(this.comboBoxServiceBook_TextChanged);
             // 
             // buttonDeleteLibItem
             // 
-            this.buttonDeleteLibItem.Location = new System.Drawing.Point(769, 412);
+            this.buttonDeleteLibItem.Location = new System.Drawing.Point(166, 332);
             this.buttonDeleteLibItem.Name = "buttonDeleteLibItem";
             this.buttonDeleteLibItem.Size = new System.Drawing.Size(126, 28);
             this.buttonDeleteLibItem.TabIndex = 14;
@@ -561,7 +546,7 @@
             // 
             // buttonEditLibItem
             // 
-            this.buttonEditLibItem.Location = new System.Drawing.Point(622, 412);
+            this.buttonEditLibItem.Location = new System.Drawing.Point(166, 298);
             this.buttonEditLibItem.Name = "buttonEditLibItem";
             this.buttonEditLibItem.Size = new System.Drawing.Size(126, 28);
             this.buttonEditLibItem.TabIndex = 13;
@@ -570,7 +555,7 @@
             // 
             // buttonAddLibItem
             // 
-            this.buttonAddLibItem.Location = new System.Drawing.Point(473, 412);
+            this.buttonAddLibItem.Location = new System.Drawing.Point(166, 264);
             this.buttonAddLibItem.Name = "buttonAddLibItem";
             this.buttonAddLibItem.Size = new System.Drawing.Size(126, 28);
             this.buttonAddLibItem.TabIndex = 12;
@@ -689,17 +674,14 @@
         private System.Windows.Forms.Label labelEmail;
         private System.Windows.Forms.Label labelUsername;
         private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button buttonClientEdit;
         private System.Windows.Forms.Button buttonClientAdd;
         private System.Windows.Forms.Button buttonDeleteLibItem;
         private System.Windows.Forms.Button buttonEditLibItem;
         private System.Windows.Forms.Button buttonAddLibItem;
         private System.Windows.Forms.DataGridView dataGridViewServiceLibrary;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBoxFeepHourLib;
         private System.Windows.Forms.TextBox textBoxToolLib;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label12;
@@ -720,5 +702,6 @@
         private System.Windows.Forms.Label labelReservationDate;
         private System.Windows.Forms.Label labelClientUsername;
         private System.Windows.Forms.ComboBox comboBoxClientUsername;
+        private System.Windows.Forms.Button buttonUpdate;
     }
 }
