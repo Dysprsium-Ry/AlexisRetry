@@ -48,18 +48,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\BillingStatement.cs" />
+    <Compile Include="Classes\InventoryClass.cs" />
     <Compile Include="Classes\ServiceLibraryClass.cs" />
     <Compile Include="Classes\ClientClass.cs" />
     <Compile Include="Classes\ServicesClass.cs" />
     <Compile Include="Classes\ServicesLibrary.cs" />
-    <Compile Include="Classes\transactionlogs.cs" />
+    <Compile Include="Classes\transactionlogsClass.cs" />
     <Compile Include="Classes\WeeklySchedule.cs" />
     <Compile Include="Database Connection\Database.cs" />
-    <Compile Include="Forms\3_b.cs">
+    <Compile Include="Forms\AddService.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\3_b.Designer.cs">
-      <DependentUpon>3_b.cs</DependentUpon>
+    <Compile Include="Forms\AddService.Designer.cs">
+      <DependentUpon>AddService.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\AlexisConstructionServices.cs">
       <SubType>Form</SubType>
@@ -70,8 +71,8 @@
     <Compile Include="Objects\Objects.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Forms\3_b.resx">
-      <DependentUpon>3_b.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\AddService.resx">
+      <DependentUpon>AddService.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AlexisConstructionServices.resx">
       <DependentUpon>AlexisConstructionServices.cs</DependentUpon>

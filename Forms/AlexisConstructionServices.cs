@@ -8,10 +8,14 @@ namespace alexisRetry.Forms
     public partial class AlexisConstructionServices : Form
     {
         ToolTip toolTip = new ToolTip();
+
+        private Form3B addServiceForm = null;
+
         public AlexisConstructionServices()
         {
             InitializeComponent();
             refresh();
+            dateTimePickerReservationDate.MinDate = DateTime.Now;
         }
 
         private void AlexisConstructionServices_Load(object sender, EventArgs e)
@@ -21,26 +25,19 @@ namespace alexisRetry.Forms
 
         #region ServiceTab
         #region Method
-        //public void registerService()
-        //{
-        //    if (!(comboBoxServiceBook.Items.Contains(comboBoxServiceBook.Text)))
-        //    {
-        //        ServicesClass.AddServicetoLib();
-        //    }
-        //}
         #endregion
 
         #region eventHandlers
 
         private void buttonBookService_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(textBoxHoursRendered.Text))
+            if (string.IsNullOrWhiteSpace(textBoxServiceDuration.Text) || textBoxServiceDuration.Text == "0")
             {
                 MessageBox.Show("Input a Hours Rendered", "Booking Failed", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(textBoxServiceFee.Text))
+            if (string.IsNullOrWhiteSpace(textBoxServiceBookingTotalFee.Text) || textBoxServiceBookingTotalFee.Text == "0")
             {
                 MessageBox.Show("Input a Fee", "Booking Failed", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
@@ -57,22 +54,22 @@ namespace alexisRetry.Forms
                 return;
             }
 
-            serviceBooking.clientUsername = comboBoxClientUsername.Text;
-            serviceBooking.Service = comboBoxServiceBook.Text;
-            serviceBooking.BookedDate = dateTimePickerReservationDate.Value;
-            serviceBooking.HoursRented = int.Parse(textBoxHoursRendered.Text);
-            serviceBooking.Fee = int.Parse(textBoxServiceFee.Text);
+            ServiceBooking.clientUsername = comboBoxClientUsername.Text;
+            ServiceBooking.Service = comboBoxServiceBook.Text;
+            ServiceBooking.BookedDate = dateTimePickerReservationDate.Value;
+            ServiceBooking.RentedDuration = int.Parse(textBoxServiceDuration.Text);
+            ServiceBooking.HourlyRate = int.Parse(textBoxBookingHourlyRate.Text);
+            ServiceBooking.TotalFee = int.Parse(textBoxServiceBookingTotalFee.Text);
 
-            ServicesClass.ServiceBooking();
-            if (ServiceValidator.BookingSuccess)
-            {
-                MessageBox.Show("Booking Failed, unexpected error occurred.", "Error", MessageBoxButtons.RetryCancel);
-            }
+            bool isDateBooked = ServicesClass.checkDate();
+
+            if (isDateBooked) { MessageBox.Show("This type of service is already booked in this date selected", "Booking Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); }
+            else { ServicesClass.ServiceBooking(); MessageBox.Show("Booked Succesfully", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information); refresh(); }
         }
 
         private void comboBoxServiceBook_TextChanged(object sender, EventArgs e)
         {
-            serviceBooking.Service = comboBoxServiceBook.Text;
+            ServiceBooking.Service = comboBoxServiceBook.Text;
             ServicesClass.ViewToolsinService(dataGridViewToolsInServices);
         }
 
@@ -118,10 +115,9 @@ namespace alexisRetry.Forms
         {
             #region serviceTab
             ServicesClass.ServicesLoad();
+            ServicesClass.ViewServicesinService(dataGridViewServicesSrvc);
             ServicesClass.ViewToolsinService(dataGridViewToolsInServices);
             comboBoxServiceBook.DataSource = ServiceObjects.Service;
-            //textBoxHoursRendered.Text =
-            //textBoxServiceFee.Text = 
             #endregion
 
             #region clientTab
@@ -136,7 +132,11 @@ namespace alexisRetry.Forms
             #endregion
 
             #region transactionLogsTab
-            transactionlogs.transactionlogsdGV(dataGridViewTransactionLogs);
+            transactionlogsClass.transactionlogsdGV(dataGridViewTransactionLogs);
+            #endregion
+
+            #region inventoryTab
+            comboBoxInventoryService.DataSource = ServiceObjects.Service;
             #endregion
         }
         #endregion
@@ -145,9 +145,9 @@ namespace alexisRetry.Forms
         private void buttonAddLibItem_Click(object sender, EventArgs e)
         {
             ServiceLibraryObject.service = comboBoxServiceslib.Text;
-            ServiceLibraryObject.tool = textBoxToolLib.Text;
+            ServiceLibraryObject.HourlyRate = Convert.ToInt32(textBoxServiceHourlyRate.Text);
 
-            ServiceLibraryClass.LibLoader();
+            ServiceLibraryClass.AddService();
             refresh();
         }
         #endregion
@@ -181,15 +181,10 @@ namespace alexisRetry.Forms
                     textbox.Clear();
                 }
             }
+
             if (dataGridViewClients.SelectedRows.Count > 0)
             {
-                DataGridViewRow selectedRow = dataGridViewClients.SelectedRows[0];
-
-                updateClientInfo.id = Convert.ToInt32(selectedRow.Cells["ClientId"].Value);
-                updateClientInfo.username = selectedRow.Cells["Username"].Value.ToString();
-                updateClientInfo.email = selectedRow.Cells["Email"].Value.ToString();
-                updateClientInfo.phoneNum = Convert.ToInt64(selectedRow.Cells["PhoneNumber"].Value);
-                updateClientInfo.name = selectedRow.Cells["Name"].Value.ToString();
+                ClientClass.selectDataGridRow(dataGridViewClients);
 
                 textBoxClientUsername.Text = updateClientInfo.username;
                 textBoxClientEmail.Text = updateClientInfo.email;
@@ -206,8 +201,8 @@ namespace alexisRetry.Forms
         {
             toolTip.InitialDelay = 0;
 
-            int serviceFee = int.TryParse(textBoxServiceFee.Text, out int sf) ? sf : 0;
-            int hoursRendered = int.TryParse(textBoxHoursRendered.Text, out int hr) ? hr : 0;
+            int serviceFee = int.TryParse(textBoxServiceBookingTotalFee.Text, out int sf) ? sf : 0;
+            int hoursRendered = int.TryParse(textBoxServiceDuration.Text, out int hr) ? hr : 0;
 
             int result = serviceFee * hoursRendered;
             toolTip.SetToolTip(buttonBookService, $"Total Fee: {result}");
@@ -222,6 +217,94 @@ namespace alexisRetry.Forms
         {
             ServiceLibraryObject.service = comboBoxServiceslib.Text;
             ServiceLibraryClass.ServiceLib(dataGridViewServiceLibrary);
+        }
+
+        private void buttonClientDelete_Click(object sender, EventArgs e)
+        {
+            if (dataGridViewClients.SelectedRows.Count > 0)
+            {
+                ClientClass.selectDataGridRow(dataGridViewClients);
+
+                if (MessageBox.Show("Delete Client? You cannot undo this action.", "Notice!", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
+                {
+                    ClientClass.DeleteClientAccount();
+                    refresh();
+                }
+            }
+            else
+            {
+                MessageBox.Show("No row selected", "Selection Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+        }
+
+        private void buttonTransactionDelete_Click(object sender, EventArgs e)
+        {
+            if (dataGridViewTransactionLogs.SelectedRows.Count > 0)
+            {
+                transactionlogsClass.selectDataGridRow(dataGridViewTransactionLogs);
+
+                if (MessageBox.Show("Do you wish to Delete this Record? You cannot undo this action.", "Notice!", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
+                {
+                    transactionlogsClass.DeleteLog();
+                    refresh();
+                }
+            }
+            else
+            {
+                MessageBox.Show("No row selected", "Selection Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+        }
+
+        private void dataGridViewServicesSrvc_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (dataGridViewServicesSrvc.SelectedRows.Count > 0)
+            {
+                ServicesClass.selectDataGridRow(dataGridViewServicesSrvc);
+
+                comboBoxServiceBook.Text = ServiceBooking.Service;
+            }
+            else
+            {
+                MessageBox.Show("No row selected", "Selection Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+        }
+
+        private void buttonCancelBook_Click(object sender, EventArgs e)
+        {
+            foreach (Control control in tabPageServicesBooking.Controls)
+            {
+                if (control is TextBox textbox)
+                {
+                    textbox.Clear();
+                }
+            }
+            refresh();
+        }
+
+        private void buttonAddAdditionalServiceLib_Click(object sender, EventArgs e)
+        {
+            if (addServiceForm == null || addServiceForm.IsDisposed)
+            {
+                addServiceForm = new Form3B();
+                addServiceForm.FormClosed += (s, args) => addServiceForm = null;
+                addServiceForm.Show();
+            }
+            else
+            {
+                addServiceForm.BringToFront();
+            }
+        }
+
+        private void buttonRemoveAdditionalService_Click(object sender, EventArgs e)
+        {
+            if (addServiceForm != null && !addServiceForm.IsDisposed)
+            {
+                addServiceForm.Close();
+                addServiceForm = null;
+            }
+
+            multipleBookings.Service1 = null;
+            multipleBookings.Service2 = null;
         }
     }
 }

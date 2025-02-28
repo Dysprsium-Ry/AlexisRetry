@@ -8,16 +8,16 @@ namespace alexisRetry.Classes
 {
     public static class ServiceLibraryClass
     {
-        public static void LibLoader()
+        public static void AddService()
         {
             using (SqlConnection connection = DatabaseConnection.Establish())
             {
-                using (SqlCommand command = new SqlCommand("INSERT INTO D1.Services (Service, Tool) VALUES(@service, @tool)", connection))
+                using (SqlCommand command = new SqlCommand("INSERT INTO D1.Services (Service, RatePerHour) VALUES(@service, @RatePerHour)", connection))
                 {
                     command.Parameters.AddWithValue("@service", ServiceLibraryObject.service);
-                    command.Parameters.AddWithValue("@tool", ServiceLibraryObject.tool);
+                    command.Parameters.AddWithValue("@RatePerHour", ServiceLibraryObject.HourlyRate);
                     command.ExecuteNonQuery();
-                    MessageBox.Show("Registered!");
+                    MessageBox.Show("Saved Successfully", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }
@@ -28,23 +28,8 @@ namespace alexisRetry.Classes
             {
                 if (ServiceLibraryObject.service != null)
                 {
-                    using (SqlCommand command = new SqlCommand("SELECT Tool FROM D1.Services WHERE Service = @service", connection))
-                    {
-                        command.Parameters.AddWithValue("@service", ServiceLibraryObject.service);
-
-                        using (SqlDataAdapter adapter = new SqlDataAdapter(command))
-                        {
-                            DataTable table = new DataTable();
-                            adapter.Fill(table);
-                            dataGrid.AutoGenerateColumns = true;
-                            dataGrid.DataSource = table;
-                        }
-                    }
-                }
-                else
-                {
-                    using (SqlCommand command = new SqlCommand("SELECT Tool FROM D1.Services", connection))
-                    {
+                    using (SqlCommand command = new SqlCommand("SELECT DISTINCT Service FROM D1.Services", connection))
+                    { 
                         using (SqlDataAdapter adapter = new SqlDataAdapter(command))
                         {
                             DataTable table = new DataTable();

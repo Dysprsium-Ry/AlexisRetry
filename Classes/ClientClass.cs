@@ -1,5 +1,6 @@
 ﻿using alexisRetry.Database_Connection;
 using alexisRetry.Objects;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -52,7 +53,7 @@ namespace alexisRetry.Classes
 
         public static void AddClient()
         {
-            using(SqlConnection connection = DatabaseConnection.Establish())
+            using (SqlConnection connection = DatabaseConnection.Establish())
             {
                 using (SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM D1.Clients WHERE Username = @username OR Email = @email", connection))
                 {
@@ -96,6 +97,16 @@ namespace alexisRetry.Classes
                 }
             }
         }
+        public static void selectDataGridRow(DataGridView dataGirdView)
+        {
+            DataGridViewRow selectedRow = dataGirdView.SelectedRows[0];
+
+            updateClientInfo.id = Convert.ToInt32(selectedRow.Cells["ClientId"].Value);
+            updateClientInfo.username = selectedRow.Cells["Username"].Value.ToString();
+            updateClientInfo.email = selectedRow.Cells["Email"].Value.ToString();
+            updateClientInfo.phoneNum = Convert.ToInt64(selectedRow.Cells["PhoneNumber"].Value);
+            updateClientInfo.name = selectedRow.Cells["Name"].Value.ToString();
+        }
 
         public static void UpdateClientAccount()
         {
@@ -111,6 +122,18 @@ namespace alexisRetry.Classes
                     command.ExecuteNonQuery();
 
                     MessageBox.Show("Changes applied", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+        }
+
+        public static void DeleteClientAccount()
+        {
+            using (SqlConnection connection = DatabaseConnection.Establish())
+            {
+                using (SqlCommand command = new SqlCommand("DELETE FROM D1.Clients WHERE ClientId = @clientId", connection))
+                {
+                    command.Parameters.AddWithValue("@clientId", updateClientInfo.id);
+                    command.ExecuteNonQuery();
                 }
             }
         }
