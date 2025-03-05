@@ -77,6 +77,7 @@
             this.buttonAddLibItem = new System.Windows.Forms.Button();
             this.dataGridViewServiceLibrary = new System.Windows.Forms.DataGridView();
             this.tabPageInventory = new System.Windows.Forms.TabPage();
+            this.textBoxServiceTypeInventory = new System.Windows.Forms.TextBox();
             this.labelInventoryToolQuantity = new System.Windows.Forms.Label();
             this.textBoxInventoryQuantity = new System.Windows.Forms.TextBox();
             this.buttonDeleteToolInventory = new System.Windows.Forms.Button();
@@ -92,7 +93,7 @@
             this.dataGridViewBillingStatement = new System.Windows.Forms.DataGridView();
             this.tabPageThisWeek = new System.Windows.Forms.TabPage();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.textBoxServiceTypeInventory = new System.Windows.Forms.TextBox();
+            this.tabPageReportViewer = new System.Windows.Forms.TabPage();
             this.panelTop.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.tabPageServicesBooking.SuspendLayout();
@@ -142,6 +143,7 @@
             this.tabControlMain.Controls.Add(this.tabPageInventory);
             this.tabControlMain.Controls.Add(this.tabPageBillingStatements);
             this.tabControlMain.Controls.Add(this.tabPageThisWeek);
+            this.tabControlMain.Controls.Add(this.tabPageReportViewer);
             this.tabControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlMain.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControlMain.Location = new System.Drawing.Point(0, 73);
@@ -695,6 +697,15 @@
             this.tabPageInventory.Text = "Inventory";
             this.tabPageInventory.UseVisualStyleBackColor = true;
             // 
+            // textBoxServiceTypeInventory
+            // 
+            this.textBoxServiceTypeInventory.Enabled = false;
+            this.textBoxServiceTypeInventory.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxServiceTypeInventory.Location = new System.Drawing.Point(444, 19);
+            this.textBoxServiceTypeInventory.Name = "textBoxServiceTypeInventory";
+            this.textBoxServiceTypeInventory.Size = new System.Drawing.Size(306, 29);
+            this.textBoxServiceTypeInventory.TabIndex = 31;
+            // 
             // labelInventoryToolQuantity
             // 
             this.labelInventoryToolQuantity.AutoSize = true;
@@ -867,14 +878,14 @@
             this.dataGridView2.Size = new System.Drawing.Size(858, 402);
             this.dataGridView2.TabIndex = 1;
             // 
-            // textBoxServiceTypeInventory
+            // tabPageReportViewer
             // 
-            this.textBoxServiceTypeInventory.Enabled = false;
-            this.textBoxServiceTypeInventory.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxServiceTypeInventory.Location = new System.Drawing.Point(444, 19);
-            this.textBoxServiceTypeInventory.Name = "textBoxServiceTypeInventory";
-            this.textBoxServiceTypeInventory.Size = new System.Drawing.Size(306, 29);
-            this.textBoxServiceTypeInventory.TabIndex = 31;
+            this.tabPageReportViewer.Location = new System.Drawing.Point(4, 25);
+            this.tabPageReportViewer.Name = "tabPageReportViewer";
+            this.tabPageReportViewer.Size = new System.Drawing.Size(922, 460);
+            this.tabPageReportViewer.TabIndex = 7;
+            this.tabPageReportViewer.Text = "Reports";
+            this.tabPageReportViewer.UseVisualStyleBackColor = true;
             // 
             // AlexisConstructionServices
             // 
@@ -979,5 +990,6 @@
         private System.Windows.Forms.TextBox textBoxInventoryQuantity;
         private System.Windows.Forms.TextBox textBoxServiceLib;
         private System.Windows.Forms.TextBox textBoxServiceTypeInventory;
+        private System.Windows.Forms.TabPage tabPageReportViewer;
     }
 }
