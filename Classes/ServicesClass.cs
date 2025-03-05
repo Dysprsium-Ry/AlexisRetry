@@ -10,28 +10,28 @@ namespace alexisRetry.Classes
 {
     public class ServicesClass
     {
-        public static void ServicesLoad()
-        {
-            using (SqlConnection connection = DatabaseConnection.Establish())
-            {
-                using (SqlCommand command = new SqlCommand("SELECT Service FROM D1.Services", connection))
-                {
+        //public static void ServicesLoad()
+        //{
+        //    using (SqlConnection connection = DatabaseConnection.Establish())
+        //    {
+        //        using (SqlCommand command = new SqlCommand("SELECT Service FROM D1.Services", connection))
+        //        {
 
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        List<string> services = new List<string>();
-                        while (reader.Read())
-                        {
-                            if (!services.Contains(reader.GetString(0)))
-                            {
-                                services.Add(reader.GetString(0));
-                            }
-                        }
-                        ServiceObjects.Service = services.ToArray();
-                    }
-                }
-            }
-        }
+        //            using (SqlDataReader reader = command.ExecuteReader())
+        //            {
+        //                List<string> services = new List<string>();
+        //                while (reader.Read())
+        //                {
+        //                    if (!services.Contains(reader.GetString(0)))
+        //                    {
+        //                        services.Add(reader.GetString(0));
+        //                    }
+        //                }
+        //                ServiceObjects.Service = services.ToArray();
+        //            }
+        //        }
+        //    }
+        //}
         public static string[] GetServices()
         {
             using (SqlConnection connection = DatabaseConnection.Establish())
@@ -147,7 +147,7 @@ namespace alexisRetry.Classes
                             command.Parameters.AddWithValue("@timerender", multipleBookings.time1);
                             command.Parameters.AddWithValue("@pHourFee", multipleBookings.Fee1);
                             command.Parameters.AddWithValue("@paymentStatus", "Pending");
-                            command.Parameters.AddWithValue("@TotalFee", total1);
+                            command.Parameters.AddWithValue("@TotalFee", total1); //Create a Textbox for the total fee
                             command.ExecuteNonQuery();
                         }
                     }
@@ -163,7 +163,7 @@ namespace alexisRetry.Classes
                             command.Parameters.AddWithValue("@timerender", multipleBookings.time2);
                             command.Parameters.AddWithValue("@pHourFee", multipleBookings.Fee2);
                             command.Parameters.AddWithValue("@paymentStatus", "Pending");
-                            command.Parameters.AddWithValue("@TotalFee", total2);
+                            command.Parameters.AddWithValue("@TotalFee", total2); //Create a Textbox for the total fee
                             command.ExecuteNonQuery();
                         }
                     }
@@ -176,6 +176,29 @@ namespace alexisRetry.Classes
             DataGridViewRow selectedRow = dataGirdView.SelectedRows[0];
 
             Objects.ServiceBooking.Service = selectedRow.Cells["Service"].Value.ToString();
+        }
+        public static void PriceFetcher()
+        {
+            using (SqlConnection connection = DatabaseConnection.Establish())
+            {
+                using (SqlCommand command = new SqlCommand("SELECT RatePerHour FROM D1.Services WHERE Service = @service", connection))
+                {
+                    command.Parameters.AddWithValue("@service", Objects.ServiceBooking.Service);
+
+                    Objects.ServiceBooking.HourlyRate = Convert.ToInt32(command.ExecuteScalar());
+                }
+            }
+        }
+        public static void clientIdFetcher()
+        {
+            using (SqlConnection connection = DatabaseConnection.Establish())
+            {
+                using (SqlCommand command = new SqlCommand("SELECT ClientId FROM D1.Clients WHERE Username = @username", connection))
+                {
+                    command.Parameters.AddWithValue("@username", ServiceObjects.Clientusername);
+                    ClientObjects.ClientId = Convert.ToInt32(command.ExecuteScalar());
+                }
+            }
         }
     }
 }

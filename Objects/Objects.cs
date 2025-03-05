@@ -1,4 +1,5 @@
-﻿using System;
+﻿using alexisRetry.Classes;
+using System;
 
 namespace alexisRetry.Objects
 {
@@ -66,7 +67,6 @@ namespace alexisRetry.Objects
     public class ServiceLibraryObject
     {
         public static string service { get; set; }
-        public static string tool { get; set; }
         public static int HourlyRate { get; set; }
     }
 
@@ -84,10 +84,15 @@ namespace alexisRetry.Objects
         public static int logId { get; set; }
     }
 
-    public class Inventory
+    public class InventoryObject
     {
+        public static string service { get; set; }
         public static string tool { get; set; }
         public static int quantity { get; set; }
-        public static int price { get; set; }
+    }
+
+    public class validators
+    {
+        
     }
 }

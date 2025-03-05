@@ -28,29 +28,6 @@ namespace alexisRetry.Classes
                 }
             }
         }
-
-        public static void ClientIdList()
-        {
-            using (SqlConnection connection = DatabaseConnection.Establish())
-            {
-                using (SqlCommand command = new SqlCommand("SELECT ClientId FROM D1.Clients WHERE Username = @Username", connection))
-                {
-                    command.Parameters.AddWithValue("@Username", ServiceObjects.Clientusername);
-                    try
-                    {
-                        using (SqlDataReader reader = command.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                ClientObjects.ClientId = reader.GetInt32(0);
-                            }
-                        }
-                    }
-                    catch { }
-                }
-            }
-        }
-
         public static void AddClient()
         {
             using (SqlConnection connection = DatabaseConnection.Establish())
@@ -97,14 +74,14 @@ namespace alexisRetry.Classes
                 }
             }
         }
-        public static void selectDataGridRow(DataGridView dataGirdView)
+        public static void selectDataGridRow(DataGridView dataGridView)
         {
-            DataGridViewRow selectedRow = dataGirdView.SelectedRows[0];
+            DataGridViewRow selectedRow = dataGridView.SelectedRows[0];
 
-            updateClientInfo.id = Convert.ToInt32(selectedRow.Cells["ClientId"].Value);
+            updateClientInfo.id = Convert.ToInt32(selectedRow.Cells["ClientId"].Value ?? 0);
             updateClientInfo.username = selectedRow.Cells["Username"].Value.ToString();
             updateClientInfo.email = selectedRow.Cells["Email"].Value.ToString();
-            updateClientInfo.phoneNum = Convert.ToInt64(selectedRow.Cells["PhoneNumber"].Value);
+            updateClientInfo.phoneNum = Convert.ToInt64(selectedRow.Cells["PhoneNumber"].Value ?? 0);
             updateClientInfo.name = selectedRow.Cells["Name"].Value.ToString();
         }
 
@@ -137,5 +114,26 @@ namespace alexisRetry.Classes
                 }
             }
         }
+        //public static void ClientIdList()
+        //{
+        //    using (SqlConnection connection = DatabaseConnection.Establish())
+        //    {
+        //        using (SqlCommand command = new SqlCommand("SELECT ClientId FROM D1.Clients WHERE Username = @Username", connection))
+        //        {
+        //            command.Parameters.AddWithValue("@Username", ServiceObjects.Clientusername);
+        //            try
+        //            {
+        //                using (SqlDataReader reader = command.ExecuteReader())
+        //                {
+        //                    while (reader.Read())
+        //                    {
+        //                        ClientObjects.ClientId = reader.GetInt32(0);
+        //                    }
+        //                }
+        //            }
+        //            catch { }
+        //        }
+        //    }
+        //}
     }
 }
