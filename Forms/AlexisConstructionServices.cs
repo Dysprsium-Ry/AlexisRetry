@@ -14,11 +14,13 @@ namespace alexisRetry.Forms
         {
             InitializeComponent();
             refresh();
+            OverallTotalFeeUpdate();
             dateTimePickerReservationDate.MinDate = DateTime.Now;
         }
         private void AlexisConstructionServices_Load(object sender, EventArgs e)
         {
 
+            this.reportViewerReports.RefreshReport();
         }
 
         #region UniversalUsed Method | EventHandlers
@@ -30,7 +32,7 @@ namespace alexisRetry.Forms
             ServicesClass.ViewToolsinService(dataGridViewToolsInServices);
             comboBoxServiceBook.DataSource = ServiceObjects.Service;
             ServicesClass.PriceFetcher();
-            textBoxBookingHourlyRate.Text = ServiceBooking.HourlyRate.ToString();
+            TextBox_HourlyRate.Text = ServiceBooking.HourlyRate.ToString();
             #endregion
 
             #region clientTab
@@ -53,7 +55,12 @@ namespace alexisRetry.Forms
             #endregion
 
             #region Billing
-            BillingClass.BillingStatementDataGridProvider(dataGridViewBillingStatement);
+            BillingClass.BillingStatementDataGridProvider(dataGridViewPendingBilling);
+            BillingClass.RegisteredApprovedPayment(dataGridViewPayedBilling);
+            #endregion
+
+            #region WeeklySchedule
+            WeeklyScheduleClass.WeeklyScheduleDataGridProvider(dataGridViewWeeklySchedule);
             #endregion
         }
         private void tabControlMain_SelectedIndexChanged(object sender, EventArgs e)
@@ -67,14 +74,21 @@ namespace alexisRetry.Forms
         #region method
         private void UpdateTotalFee()
         {
-            if (int.TryParse(textBoxBookingDuration.Text.Trim(), out int duration))
+            if (int.TryParse(TextBox_ServiceDuration.Text.Trim(), out int duration))
             {
-                textBoxServiceBookingTotalFee.Text = (ServiceBooking.HourlyRate * duration).ToString();
+                TextBox_TotalFee.Text = (ServiceBooking.HourlyRate * duration).ToString();
             }
             else
             {
-                textBoxServiceBookingTotalFee.Text = "0";
+                TextBox_TotalFee.Text = "0";
             }
+        }
+
+        private void OverallTotalFeeUpdate()
+        {
+            ServiceBooking.TotalFee = int.Parse(TextBox_TotalFee.Text);
+            ServicesClass.OverallTotalFee();
+            TextBox_OverallTotalFee.Text = ServiceBooking.OverallTotalFee.ToString();
         }
         #endregion
 
@@ -85,20 +99,23 @@ namespace alexisRetry.Forms
             {
                 if (control is TextBox textbox && string.IsNullOrWhiteSpace(textbox.Text))
                 {
-                    if (textbox.Text == "0")
-                    {
-                        MessageBox.Show($"{textbox.Name} cannot be zero", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    }
-                    else { MessageBox.Show($"{textbox.Name} cannot be empty", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); }
+                    MessageBox.Show($"{textbox.Name} cannot be empty", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    textbox.Focus();
+                    return;
+                }
+                if (control is TextBox textBox && textBox.Text == "0")
+                {
+                    MessageBox.Show($"{textBox.Name} cannot have a value of Zero", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    textBox.Focus();
                     return;
                 }
             }
 
             ServiceBooking.clientUsername = comboBoxClientUsername.Text;
             ServiceBooking.Service = comboBoxServiceBook.Text;
-            ServiceBooking.BookedDate = dateTimePickerReservationDate.Value;
-            ServiceBooking.RentedDuration = int.Parse(textBoxBookingDuration.Text);
-            ServiceBooking.TotalFee = int.Parse(textBoxServiceBookingTotalFee.Text);
+            ServiceBooking.BookedDate = dateTimePickerReservationDate.Value.Date;
+            ServiceBooking.RentedDuration = int.Parse(TextBox_ServiceDuration.Text);
+            ServiceBooking.TotalFee = int.Parse(TextBox_TotalFee.Text);
 
             bool isDateBooked = ServicesClass.checkDate();
 
@@ -110,8 +127,8 @@ namespace alexisRetry.Forms
             ServiceBooking.Service = comboBoxServiceBook.Text;
             ServicesClass.ViewToolsinService(dataGridViewToolsInServices);
             ServicesClass.PriceFetcher();
-            textBoxBookingHourlyRate.Text = ServiceBooking.HourlyRate.ToString();
-            textBoxServiceBookingTotalFee.Text = (ServiceBooking.HourlyRate * ServiceBooking.RentedDuration).ToString();
+            TextBox_HourlyRate.Text = ServiceBooking.HourlyRate.ToString();
+            TextBox_TotalFee.Text = (ServiceBooking.HourlyRate * ServiceBooking.RentedDuration).ToString();
         }
         private void comboBoxClientUsername_SelectedValueChanged(object sender, EventArgs e)
         {
@@ -130,7 +147,7 @@ namespace alexisRetry.Forms
         }
         private void textBoxTotalFee_TextChanged(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(textBoxBookingDuration.Text)) { textBoxBookingDuration.Text = "0"; }
+            if (string.IsNullOrWhiteSpace(TextBox_ServiceDuration.Text)) { TextBox_ServiceDuration.Text = "0"; }
             UpdateTotalFee();
         }
         private void dataGridViewServicesSrvc_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -180,29 +197,40 @@ namespace alexisRetry.Forms
 
             multipleBookings.Service1 = null;
             multipleBookings.Service2 = null;
+            multipleBookings.Fee1 = 0;
+            multipleBookings.Fee2 = 0;
+            multipleBookings.time1 = 0;
+            multipleBookings.time2 = 0;
+            multipleBookings.totalFee1 = 0;
+            multipleBookings.totalFee2 = 0;
         }
         private void HandleInputDisplay(KeyPressEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(textBoxBookingDuration.Text))
+            if (string.IsNullOrWhiteSpace(TextBox_ServiceDuration.Text))
             {
-                textBoxBookingDuration.Text = "0";
+                TextBox_ServiceDuration.Text = "0";
             }
 
             if (e.KeyChar == (char)Keys.Back)
             {
-                textBoxBookingDuration.Text = "0";
+                TextBox_ServiceDuration.Text = "0";
                 e.Handled = true;
                 return;
             }
 
-            if (textBoxBookingDuration.Text == "0")
+            if (TextBox_ServiceDuration.Text == "0")
             {
                 if (e.KeyChar != '0')
                 {
-                    textBoxBookingDuration.Text = e.KeyChar.ToString();
+                    TextBox_ServiceDuration.Text = e.KeyChar.ToString();
                 }
                 e.Handled = true;
             }
+            TextBox_ServiceDuration.SelectionStart = TextBox_ServiceDuration.Text.Length;
+        }
+        private void tabPageServicesBooking_MouseMove(object sender, MouseEventArgs e)
+        {
+            OverallTotalFeeUpdate();
         }
         #endregion
 
@@ -443,7 +471,7 @@ namespace alexisRetry.Forms
         #region Billing
         private void dataGridViewBillingStatement_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            BillingClass.selectDataGridRow(dataGridViewBillingStatement);
+            BillingClass.selectDataGridRow(dataGridViewPendingBilling);
         }
         private void buttonPaid_Click(object sender, EventArgs e)
         {
@@ -451,8 +479,7 @@ namespace alexisRetry.Forms
             refresh();
         }
 
-        #endregion
 
-        
+        #endregion
     }
 }

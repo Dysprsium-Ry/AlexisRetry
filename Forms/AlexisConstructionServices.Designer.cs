@@ -32,7 +32,9 @@
             this.label9 = new System.Windows.Forms.Label();
             this.tabControlMain = new System.Windows.Forms.TabControl();
             this.tabPageServicesBooking = new System.Windows.Forms.TabPage();
-            this.textBoxBookingHourlyRate = new System.Windows.Forms.TextBox();
+            this.TextBox_OverallTotalFee = new System.Windows.Forms.TextBox();
+            this.labelOverallTotalFee = new System.Windows.Forms.Label();
+            this.TextBox_HourlyRate = new System.Windows.Forms.TextBox();
             this.labelBookHourlyRate = new System.Windows.Forms.Label();
             this.dataGridViewServicesSrvc = new System.Windows.Forms.DataGridView();
             this.labelClientUsername = new System.Windows.Forms.Label();
@@ -43,8 +45,8 @@
             this.buttonBookService = new System.Windows.Forms.Button();
             this.buttonRemoveAdditionalService = new System.Windows.Forms.Button();
             this.buttonAddAdditionalServiceLib = new System.Windows.Forms.Button();
-            this.textBoxServiceBookingTotalFee = new System.Windows.Forms.TextBox();
-            this.textBoxBookingDuration = new System.Windows.Forms.TextBox();
+            this.TextBox_TotalFee = new System.Windows.Forms.TextBox();
+            this.TextBox_ServiceDuration = new System.Windows.Forms.TextBox();
             this.labelTotalFee = new System.Windows.Forms.Label();
             this.labelServiceDuration = new System.Windows.Forms.Label();
             this.labelBookingService = new System.Windows.Forms.Label();
@@ -84,16 +86,20 @@
             this.buttonEditToolInventory = new System.Windows.Forms.Button();
             this.buttonAddToolInventory = new System.Windows.Forms.Button();
             this.comboBoxInventoryService = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.labelInventoryService = new System.Windows.Forms.Label();
             this.dataGridViewInventory = new System.Windows.Forms.DataGridView();
             this.labelInventoryTool = new System.Windows.Forms.Label();
             this.textBoxInventoryTool = new System.Windows.Forms.TextBox();
             this.tabPageBillingStatements = new System.Windows.Forms.TabPage();
+            this.labelPayedPayments = new System.Windows.Forms.Label();
+            this.labelPendingPayments = new System.Windows.Forms.Label();
+            this.dataGridViewPayedBilling = new System.Windows.Forms.DataGridView();
             this.buttonPaid = new System.Windows.Forms.Button();
-            this.dataGridViewBillingStatement = new System.Windows.Forms.DataGridView();
+            this.dataGridViewPendingBilling = new System.Windows.Forms.DataGridView();
             this.tabPageThisWeek = new System.Windows.Forms.TabPage();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.dataGridViewWeeklySchedule = new System.Windows.Forms.DataGridView();
             this.tabPageReportViewer = new System.Windows.Forms.TabPage();
+            this.reportViewerReports = new Microsoft.Reporting.WinForms.ReportViewer();
             this.panelTop.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.tabPageServicesBooking.SuspendLayout();
@@ -108,9 +114,11 @@
             this.tabPageInventory.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewInventory)).BeginInit();
             this.tabPageBillingStatements.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewBillingStatement)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPayedBilling)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPendingBilling)).BeginInit();
             this.tabPageThisWeek.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewWeeklySchedule)).BeginInit();
+            this.tabPageReportViewer.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelTop
@@ -122,6 +130,7 @@
             this.panelTop.Name = "panelTop";
             this.panelTop.Size = new System.Drawing.Size(930, 73);
             this.panelTop.TabIndex = 0;
+            this.panelTop.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // label9
             // 
@@ -133,6 +142,7 @@
             this.label9.Size = new System.Drawing.Size(289, 26);
             this.label9.TabIndex = 0;
             this.label9.Text = "Alexis Construction Services";
+            this.label9.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // tabControlMain
             // 
@@ -152,10 +162,13 @@
             this.tabControlMain.Size = new System.Drawing.Size(930, 489);
             this.tabControlMain.TabIndex = 1;
             this.tabControlMain.SelectedIndexChanged += new System.EventHandler(this.tabControlMain_SelectedIndexChanged);
+            this.tabControlMain.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // tabPageServicesBooking
             // 
-            this.tabPageServicesBooking.Controls.Add(this.textBoxBookingHourlyRate);
+            this.tabPageServicesBooking.Controls.Add(this.TextBox_OverallTotalFee);
+            this.tabPageServicesBooking.Controls.Add(this.labelOverallTotalFee);
+            this.tabPageServicesBooking.Controls.Add(this.TextBox_HourlyRate);
             this.tabPageServicesBooking.Controls.Add(this.labelBookHourlyRate);
             this.tabPageServicesBooking.Controls.Add(this.dataGridViewServicesSrvc);
             this.tabPageServicesBooking.Controls.Add(this.labelClientUsername);
@@ -166,8 +179,8 @@
             this.tabPageServicesBooking.Controls.Add(this.buttonBookService);
             this.tabPageServicesBooking.Controls.Add(this.buttonRemoveAdditionalService);
             this.tabPageServicesBooking.Controls.Add(this.buttonAddAdditionalServiceLib);
-            this.tabPageServicesBooking.Controls.Add(this.textBoxServiceBookingTotalFee);
-            this.tabPageServicesBooking.Controls.Add(this.textBoxBookingDuration);
+            this.tabPageServicesBooking.Controls.Add(this.TextBox_TotalFee);
+            this.tabPageServicesBooking.Controls.Add(this.TextBox_ServiceDuration);
             this.tabPageServicesBooking.Controls.Add(this.labelTotalFee);
             this.tabPageServicesBooking.Controls.Add(this.labelServiceDuration);
             this.tabPageServicesBooking.Controls.Add(this.labelBookingService);
@@ -180,24 +193,47 @@
             this.tabPageServicesBooking.TabIndex = 0;
             this.tabPageServicesBooking.Text = "Book Service";
             this.tabPageServicesBooking.UseVisualStyleBackColor = true;
+            this.tabPageServicesBooking.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
-            // textBoxBookingHourlyRate
+            // TextBox_OverallTotalFee
             // 
-            this.textBoxBookingHourlyRate.Enabled = false;
-            this.textBoxBookingHourlyRate.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxBookingHourlyRate.Location = new System.Drawing.Point(99, 259);
-            this.textBoxBookingHourlyRate.Name = "textBoxBookingHourlyRate";
-            this.textBoxBookingHourlyRate.Size = new System.Drawing.Size(266, 30);
-            this.textBoxBookingHourlyRate.TabIndex = 36;
+            this.TextBox_OverallTotalFee.Enabled = false;
+            this.TextBox_OverallTotalFee.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TextBox_OverallTotalFee.Location = new System.Drawing.Point(128, 244);
+            this.TextBox_OverallTotalFee.Name = "TextBox_OverallTotalFee";
+            this.TextBox_OverallTotalFee.Size = new System.Drawing.Size(206, 30);
+            this.TextBox_OverallTotalFee.TabIndex = 38;
+            this.TextBox_OverallTotalFee.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
+            // 
+            // labelOverallTotalFee
+            // 
+            this.labelOverallTotalFee.AutoSize = true;
+            this.labelOverallTotalFee.Location = new System.Drawing.Point(125, 224);
+            this.labelOverallTotalFee.Name = "labelOverallTotalFee";
+            this.labelOverallTotalFee.Size = new System.Drawing.Size(117, 17);
+            this.labelOverallTotalFee.TabIndex = 39;
+            this.labelOverallTotalFee.Text = "Overall Total Fee";
+            this.labelOverallTotalFee.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
+            // 
+            // TextBox_HourlyRate
+            // 
+            this.TextBox_HourlyRate.Enabled = false;
+            this.TextBox_HourlyRate.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TextBox_HourlyRate.Location = new System.Drawing.Point(23, 184);
+            this.TextBox_HourlyRate.Name = "TextBox_HourlyRate";
+            this.TextBox_HourlyRate.Size = new System.Drawing.Size(206, 30);
+            this.TextBox_HourlyRate.TabIndex = 36;
+            this.TextBox_HourlyRate.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // labelBookHourlyRate
             // 
             this.labelBookHourlyRate.AutoSize = true;
-            this.labelBookHourlyRate.Location = new System.Drawing.Point(96, 239);
+            this.labelBookHourlyRate.Location = new System.Drawing.Point(23, 164);
             this.labelBookHourlyRate.Name = "labelBookHourlyRate";
             this.labelBookHourlyRate.Size = new System.Drawing.Size(83, 17);
             this.labelBookHourlyRate.TabIndex = 37;
             this.labelBookHourlyRate.Text = "Hourly Rate";
+            this.labelBookHourlyRate.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // dataGridViewServicesSrvc
             // 
@@ -218,26 +254,29 @@
             this.dataGridViewServicesSrvc.Size = new System.Drawing.Size(404, 197);
             this.dataGridViewServicesSrvc.TabIndex = 35;
             this.dataGridViewServicesSrvc.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewServicesSrvc_RowHeaderMouseClick);
+            this.dataGridViewServicesSrvc.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // labelClientUsername
             // 
             this.labelClientUsername.AutoSize = true;
-            this.labelClientUsername.Location = new System.Drawing.Point(96, 25);
+            this.labelClientUsername.Location = new System.Drawing.Point(23, 25);
             this.labelClientUsername.Name = "labelClientUsername";
             this.labelClientUsername.Size = new System.Drawing.Size(112, 17);
             this.labelClientUsername.TabIndex = 34;
             this.labelClientUsername.Text = "Client Username";
+            this.labelClientUsername.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // comboBoxClientUsername
             // 
             this.comboBoxClientUsername.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxClientUsername.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboBoxClientUsername.FormattingEnabled = true;
-            this.comboBoxClientUsername.Location = new System.Drawing.Point(99, 45);
+            this.comboBoxClientUsername.Location = new System.Drawing.Point(23, 45);
             this.comboBoxClientUsername.Name = "comboBoxClientUsername";
-            this.comboBoxClientUsername.Size = new System.Drawing.Size(266, 33);
+            this.comboBoxClientUsername.Size = new System.Drawing.Size(206, 33);
             this.comboBoxClientUsername.TabIndex = 33;
             this.comboBoxClientUsername.SelectedValueChanged += new System.EventHandler(this.comboBoxClientUsername_SelectedValueChanged);
+            this.comboBoxClientUsername.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // dateTimePickerReservationDate
             // 
@@ -245,21 +284,23 @@
             this.dateTimePickerReservationDate.CustomFormat = "MMMM dd,  yyyy";
             this.dateTimePickerReservationDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dateTimePickerReservationDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerReservationDate.Location = new System.Drawing.Point(99, 157);
+            this.dateTimePickerReservationDate.Location = new System.Drawing.Point(23, 115);
             this.dateTimePickerReservationDate.MinDate = new System.DateTime(2025, 2, 25, 0, 0, 0, 0);
             this.dateTimePickerReservationDate.Name = "dateTimePickerReservationDate";
-            this.dateTimePickerReservationDate.Size = new System.Drawing.Size(266, 26);
+            this.dateTimePickerReservationDate.Size = new System.Drawing.Size(206, 26);
             this.dateTimePickerReservationDate.TabIndex = 2;
             this.dateTimePickerReservationDate.Value = new System.DateTime(2025, 2, 25, 9, 17, 9, 0);
+            this.dateTimePickerReservationDate.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // labelReservationDate
             // 
             this.labelReservationDate.AutoSize = true;
-            this.labelReservationDate.Location = new System.Drawing.Point(96, 137);
+            this.labelReservationDate.Location = new System.Drawing.Point(23, 95);
             this.labelReservationDate.Name = "labelReservationDate";
             this.labelReservationDate.Size = new System.Drawing.Size(118, 17);
             this.labelReservationDate.TabIndex = 30;
             this.labelReservationDate.Text = "Reservation Date";
+            this.labelReservationDate.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // buttonCancelBook
             // 
@@ -271,6 +312,7 @@
             this.buttonCancelBook.Text = "Cancel";
             this.buttonCancelBook.UseVisualStyleBackColor = true;
             this.buttonCancelBook.Click += new System.EventHandler(this.buttonCancelBook_Click);
+            this.buttonCancelBook.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // buttonBookService
             // 
@@ -282,6 +324,7 @@
             this.buttonBookService.Text = "Book";
             this.buttonBookService.UseVisualStyleBackColor = true;
             this.buttonBookService.Click += new System.EventHandler(this.buttonBookService_Click);
+            this.buttonBookService.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // buttonRemoveAdditionalService
             // 
@@ -293,6 +336,7 @@
             this.buttonRemoveAdditionalService.Text = "Remove Service";
             this.buttonRemoveAdditionalService.UseVisualStyleBackColor = true;
             this.buttonRemoveAdditionalService.Click += new System.EventHandler(this.buttonRemoveAdditionalService_Click);
+            this.buttonRemoveAdditionalService.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // buttonAddAdditionalServiceLib
             // 
@@ -304,54 +348,60 @@
             this.buttonAddAdditionalServiceLib.Text = "Add Service";
             this.buttonAddAdditionalServiceLib.UseVisualStyleBackColor = true;
             this.buttonAddAdditionalServiceLib.Click += new System.EventHandler(this.buttonAddAdditionalServiceLib_Click);
+            this.buttonAddAdditionalServiceLib.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
-            // textBoxServiceBookingTotalFee
+            // TextBox_TotalFee
             // 
-            this.textBoxServiceBookingTotalFee.Enabled = false;
-            this.textBoxServiceBookingTotalFee.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxServiceBookingTotalFee.Location = new System.Drawing.Point(99, 312);
-            this.textBoxServiceBookingTotalFee.Name = "textBoxServiceBookingTotalFee";
-            this.textBoxServiceBookingTotalFee.Size = new System.Drawing.Size(266, 30);
-            this.textBoxServiceBookingTotalFee.TabIndex = 4;
-            this.textBoxServiceBookingTotalFee.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxNumericalTextBox_KeyPress);
+            this.TextBox_TotalFee.Enabled = false;
+            this.TextBox_TotalFee.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TextBox_TotalFee.Location = new System.Drawing.Point(235, 184);
+            this.TextBox_TotalFee.Name = "TextBox_TotalFee";
+            this.TextBox_TotalFee.Size = new System.Drawing.Size(206, 30);
+            this.TextBox_TotalFee.TabIndex = 4;
+            this.TextBox_TotalFee.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxNumericalTextBox_KeyPress);
+            this.TextBox_TotalFee.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
-            // textBoxBookingDuration
+            // TextBox_ServiceDuration
             // 
-            this.textBoxBookingDuration.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxBookingDuration.Location = new System.Drawing.Point(99, 206);
-            this.textBoxBookingDuration.Name = "textBoxBookingDuration";
-            this.textBoxBookingDuration.Size = new System.Drawing.Size(266, 30);
-            this.textBoxBookingDuration.TabIndex = 3;
-            this.textBoxBookingDuration.Text = "0";
-            this.textBoxBookingDuration.TextChanged += new System.EventHandler(this.textBoxTotalFee_TextChanged);
-            this.textBoxBookingDuration.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxNumericalTextBox_KeyPress);
+            this.TextBox_ServiceDuration.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TextBox_ServiceDuration.Location = new System.Drawing.Point(235, 115);
+            this.TextBox_ServiceDuration.Name = "TextBox_ServiceDuration";
+            this.TextBox_ServiceDuration.Size = new System.Drawing.Size(206, 30);
+            this.TextBox_ServiceDuration.TabIndex = 3;
+            this.TextBox_ServiceDuration.Text = "0";
+            this.TextBox_ServiceDuration.TextChanged += new System.EventHandler(this.textBoxTotalFee_TextChanged);
+            this.TextBox_ServiceDuration.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxNumericalTextBox_KeyPress);
+            this.TextBox_ServiceDuration.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // labelTotalFee
             // 
             this.labelTotalFee.AutoSize = true;
-            this.labelTotalFee.Location = new System.Drawing.Point(96, 292);
+            this.labelTotalFee.Location = new System.Drawing.Point(232, 164);
             this.labelTotalFee.Name = "labelTotalFee";
             this.labelTotalFee.Size = new System.Drawing.Size(68, 17);
             this.labelTotalFee.TabIndex = 8;
             this.labelTotalFee.Text = "Total Fee";
+            this.labelTotalFee.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // labelServiceDuration
             // 
             this.labelServiceDuration.AutoSize = true;
-            this.labelServiceDuration.Location = new System.Drawing.Point(96, 186);
+            this.labelServiceDuration.Location = new System.Drawing.Point(232, 95);
             this.labelServiceDuration.Name = "labelServiceDuration";
             this.labelServiceDuration.Size = new System.Drawing.Size(113, 17);
             this.labelServiceDuration.TabIndex = 7;
             this.labelServiceDuration.Text = "Service Duration";
+            this.labelServiceDuration.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // labelBookingService
             // 
             this.labelBookingService.AutoSize = true;
-            this.labelBookingService.Location = new System.Drawing.Point(96, 81);
+            this.labelBookingService.Location = new System.Drawing.Point(232, 25);
             this.labelBookingService.Name = "labelBookingService";
             this.labelBookingService.Size = new System.Drawing.Size(55, 17);
             this.labelBookingService.TabIndex = 5;
             this.labelBookingService.Text = "Service";
+            this.labelBookingService.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // dataGridViewToolsInServices
             // 
@@ -371,17 +421,19 @@
             this.dataGridViewToolsInServices.ShowEditingIcon = false;
             this.dataGridViewToolsInServices.Size = new System.Drawing.Size(404, 197);
             this.dataGridViewToolsInServices.TabIndex = 4;
+            this.dataGridViewToolsInServices.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // comboBoxServiceBook
             // 
             this.comboBoxServiceBook.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxServiceBook.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboBoxServiceBook.FormattingEnabled = true;
-            this.comboBoxServiceBook.Location = new System.Drawing.Point(99, 101);
+            this.comboBoxServiceBook.Location = new System.Drawing.Point(235, 45);
             this.comboBoxServiceBook.Name = "comboBoxServiceBook";
-            this.comboBoxServiceBook.Size = new System.Drawing.Size(266, 33);
+            this.comboBoxServiceBook.Size = new System.Drawing.Size(206, 33);
             this.comboBoxServiceBook.TabIndex = 1;
             this.comboBoxServiceBook.TextChanged += new System.EventHandler(this.comboBoxServiceBook_TextChanged);
+            this.comboBoxServiceBook.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // tabPageTransactionLogs
             // 
@@ -395,6 +447,7 @@
             this.tabPageTransactionLogs.TabIndex = 1;
             this.tabPageTransactionLogs.Text = "Transaction Logs";
             this.tabPageTransactionLogs.UseVisualStyleBackColor = true;
+            this.tabPageTransactionLogs.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // buttonTransactionDelete
             // 
@@ -405,6 +458,7 @@
             this.buttonTransactionDelete.Text = "Delete";
             this.buttonTransactionDelete.UseVisualStyleBackColor = true;
             this.buttonTransactionDelete.Click += new System.EventHandler(this.buttonTransactionDelete_Click);
+            this.buttonTransactionDelete.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // buttonTransactionAdd
             // 
@@ -415,6 +469,7 @@
             this.buttonTransactionAdd.Text = "Add";
             this.buttonTransactionAdd.UseVisualStyleBackColor = true;
             this.buttonTransactionAdd.Click += new System.EventHandler(this.buttonTransactionAdd_Click);
+            this.buttonTransactionAdd.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // dataGridViewTransactionLogs
             // 
@@ -434,6 +489,7 @@
             this.dataGridViewTransactionLogs.ShowEditingIcon = false;
             this.dataGridViewTransactionLogs.Size = new System.Drawing.Size(721, 412);
             this.dataGridViewTransactionLogs.TabIndex = 0;
+            this.dataGridViewTransactionLogs.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // tabPageClients
             // 
@@ -455,6 +511,7 @@
             this.tabPageClients.TabIndex = 2;
             this.tabPageClients.Text = "Clients";
             this.tabPageClients.UseVisualStyleBackColor = true;
+            this.tabPageClients.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // buttonUpdate
             // 
@@ -465,6 +522,7 @@
             this.buttonUpdate.Text = "Update";
             this.buttonUpdate.UseVisualStyleBackColor = true;
             this.buttonUpdate.Click += new System.EventHandler(this.buttonUpdate_Click);
+            this.buttonUpdate.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // buttonClientDelete
             // 
@@ -475,6 +533,7 @@
             this.buttonClientDelete.Text = "Delete";
             this.buttonClientDelete.UseVisualStyleBackColor = true;
             this.buttonClientDelete.Click += new System.EventHandler(this.buttonClientDelete_Click);
+            this.buttonClientDelete.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // buttonClientAdd
             // 
@@ -485,6 +544,7 @@
             this.buttonClientAdd.Text = "Add";
             this.buttonClientAdd.UseVisualStyleBackColor = true;
             this.buttonClientAdd.Click += new System.EventHandler(this.buttonClientAdd_Click);
+            this.buttonClientAdd.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // labelName
             // 
@@ -494,6 +554,7 @@
             this.labelName.Size = new System.Drawing.Size(45, 17);
             this.labelName.TabIndex = 8;
             this.labelName.Text = "Name";
+            this.labelName.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // labelPhoneNumber
             // 
@@ -503,6 +564,7 @@
             this.labelPhoneNumber.Size = new System.Drawing.Size(103, 17);
             this.labelPhoneNumber.TabIndex = 7;
             this.labelPhoneNumber.Text = "Phone Number";
+            this.labelPhoneNumber.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // labelEmail
             // 
@@ -512,6 +574,7 @@
             this.labelEmail.Size = new System.Drawing.Size(47, 17);
             this.labelEmail.TabIndex = 6;
             this.labelEmail.Text = "E-Mail";
+            this.labelEmail.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // labelUsername
             // 
@@ -521,6 +584,7 @@
             this.labelUsername.Size = new System.Drawing.Size(73, 17);
             this.labelUsername.TabIndex = 5;
             this.labelUsername.Text = "Username";
+            this.labelUsername.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // textBoxClientName
             // 
@@ -529,6 +593,7 @@
             this.textBoxClientName.Name = "textBoxClientName";
             this.textBoxClientName.Size = new System.Drawing.Size(222, 27);
             this.textBoxClientName.TabIndex = 4;
+            this.textBoxClientName.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // textBoxClientPhoneNumber
             // 
@@ -538,6 +603,7 @@
             this.textBoxClientPhoneNumber.Size = new System.Drawing.Size(222, 27);
             this.textBoxClientPhoneNumber.TabIndex = 3;
             this.textBoxClientPhoneNumber.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxClientPhoneNumber_KeyPress);
+            this.textBoxClientPhoneNumber.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // textBoxClientEmail
             // 
@@ -546,6 +612,7 @@
             this.textBoxClientEmail.Name = "textBoxClientEmail";
             this.textBoxClientEmail.Size = new System.Drawing.Size(222, 27);
             this.textBoxClientEmail.TabIndex = 2;
+            this.textBoxClientEmail.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // textBoxClientUsername
             // 
@@ -554,6 +621,7 @@
             this.textBoxClientUsername.Name = "textBoxClientUsername";
             this.textBoxClientUsername.Size = new System.Drawing.Size(222, 27);
             this.textBoxClientUsername.TabIndex = 1;
+            this.textBoxClientUsername.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // dataGridViewClients
             // 
@@ -574,6 +642,7 @@
             this.dataGridViewClients.TabIndex = 0;
             this.dataGridViewClients.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewClients_RowHeaderMouseDoubleClick);
             this.dataGridViewClients.RowHeaderMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewClients_RowHeaderMouseDoubleClick);
+            this.dataGridViewClients.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // tabPageOfferedServices
             // 
@@ -591,6 +660,7 @@
             this.tabPageOfferedServices.TabIndex = 3;
             this.tabPageOfferedServices.Text = "Services Library";
             this.tabPageOfferedServices.UseVisualStyleBackColor = true;
+            this.tabPageOfferedServices.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // textBoxServiceLib
             // 
@@ -599,6 +669,7 @@
             this.textBoxServiceLib.Name = "textBoxServiceLib";
             this.textBoxServiceLib.Size = new System.Drawing.Size(306, 29);
             this.textBoxServiceLib.TabIndex = 26;
+            this.textBoxServiceLib.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // labelHourlyRate
             // 
@@ -608,6 +679,7 @@
             this.labelHourlyRate.Size = new System.Drawing.Size(83, 17);
             this.labelHourlyRate.TabIndex = 25;
             this.labelHourlyRate.Text = "Hourly Rate";
+            this.labelHourlyRate.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // textBoxServiceHourlyRate
             // 
@@ -616,6 +688,7 @@
             this.textBoxServiceHourlyRate.Name = "textBoxServiceHourlyRate";
             this.textBoxServiceHourlyRate.Size = new System.Drawing.Size(306, 29);
             this.textBoxServiceHourlyRate.TabIndex = 24;
+            this.textBoxServiceHourlyRate.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // label5
             // 
@@ -625,6 +698,7 @@
             this.label5.Size = new System.Drawing.Size(55, 17);
             this.label5.TabIndex = 19;
             this.label5.Text = "Service";
+            this.label5.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // buttonDeleteLibItem
             // 
@@ -635,6 +709,7 @@
             this.buttonDeleteLibItem.Text = "Delete";
             this.buttonDeleteLibItem.UseVisualStyleBackColor = true;
             this.buttonDeleteLibItem.Click += new System.EventHandler(this.buttonDeleteLibItem_Click);
+            this.buttonDeleteLibItem.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // buttonEditLibItem
             // 
@@ -645,6 +720,7 @@
             this.buttonEditLibItem.Text = "Edit";
             this.buttonEditLibItem.UseVisualStyleBackColor = true;
             this.buttonEditLibItem.Click += new System.EventHandler(this.buttonEditLibItem_Click);
+            this.buttonEditLibItem.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // buttonAddLibItem
             // 
@@ -655,6 +731,7 @@
             this.buttonAddLibItem.Text = "Add";
             this.buttonAddLibItem.UseVisualStyleBackColor = true;
             this.buttonAddLibItem.Click += new System.EventHandler(this.buttonAddLibItem_Click);
+            this.buttonAddLibItem.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // dataGridViewServiceLibrary
             // 
@@ -676,6 +753,7 @@
             this.dataGridViewServiceLibrary.TabIndex = 0;
             this.dataGridViewServiceLibrary.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewServiceLibrary_RowHeaderMouseDoubleClick);
             this.dataGridViewServiceLibrary.RowHeaderMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewServiceLibrary_RowHeaderMouseDoubleClick);
+            this.dataGridViewServiceLibrary.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // tabPageInventory
             // 
@@ -686,7 +764,7 @@
             this.tabPageInventory.Controls.Add(this.buttonEditToolInventory);
             this.tabPageInventory.Controls.Add(this.buttonAddToolInventory);
             this.tabPageInventory.Controls.Add(this.comboBoxInventoryService);
-            this.tabPageInventory.Controls.Add(this.label1);
+            this.tabPageInventory.Controls.Add(this.labelInventoryService);
             this.tabPageInventory.Controls.Add(this.dataGridViewInventory);
             this.tabPageInventory.Controls.Add(this.labelInventoryTool);
             this.tabPageInventory.Controls.Add(this.textBoxInventoryTool);
@@ -696,6 +774,7 @@
             this.tabPageInventory.TabIndex = 6;
             this.tabPageInventory.Text = "Inventory";
             this.tabPageInventory.UseVisualStyleBackColor = true;
+            this.tabPageInventory.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // textBoxServiceTypeInventory
             // 
@@ -705,6 +784,7 @@
             this.textBoxServiceTypeInventory.Name = "textBoxServiceTypeInventory";
             this.textBoxServiceTypeInventory.Size = new System.Drawing.Size(306, 29);
             this.textBoxServiceTypeInventory.TabIndex = 31;
+            this.textBoxServiceTypeInventory.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // labelInventoryToolQuantity
             // 
@@ -714,6 +794,7 @@
             this.labelInventoryToolQuantity.Size = new System.Drawing.Size(61, 17);
             this.labelInventoryToolQuantity.TabIndex = 30;
             this.labelInventoryToolQuantity.Text = "Quantity";
+            this.labelInventoryToolQuantity.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // textBoxInventoryQuantity
             // 
@@ -722,6 +803,7 @@
             this.textBoxInventoryQuantity.Name = "textBoxInventoryQuantity";
             this.textBoxInventoryQuantity.Size = new System.Drawing.Size(306, 29);
             this.textBoxInventoryQuantity.TabIndex = 29;
+            this.textBoxInventoryQuantity.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // buttonDeleteToolInventory
             // 
@@ -732,6 +814,7 @@
             this.buttonDeleteToolInventory.Text = "Delete";
             this.buttonDeleteToolInventory.UseVisualStyleBackColor = true;
             this.buttonDeleteToolInventory.Click += new System.EventHandler(this.buttonDeleteToolInventory_Click);
+            this.buttonDeleteToolInventory.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // buttonEditToolInventory
             // 
@@ -742,6 +825,7 @@
             this.buttonEditToolInventory.Text = "Update";
             this.buttonEditToolInventory.UseVisualStyleBackColor = true;
             this.buttonEditToolInventory.Click += new System.EventHandler(this.buttonEditToolInventory_Click);
+            this.buttonEditToolInventory.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // buttonAddToolInventory
             // 
@@ -752,6 +836,7 @@
             this.buttonAddToolInventory.Text = "Add";
             this.buttonAddToolInventory.UseVisualStyleBackColor = true;
             this.buttonAddToolInventory.Click += new System.EventHandler(this.buttonAddToolInventory_Click);
+            this.buttonAddToolInventory.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // comboBoxInventoryService
             // 
@@ -763,15 +848,17 @@
             this.comboBoxInventoryService.Size = new System.Drawing.Size(306, 32);
             this.comboBoxInventoryService.TabIndex = 25;
             this.comboBoxInventoryService.SelectedValueChanged += new System.EventHandler(this.comboBoxInventoryService_SelectedValueChanged);
+            this.comboBoxInventoryService.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
-            // label1
+            // labelInventoryService
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(59, 73);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(55, 17);
-            this.label1.TabIndex = 24;
-            this.label1.Text = "Service";
+            this.labelInventoryService.AutoSize = true;
+            this.labelInventoryService.Location = new System.Drawing.Point(59, 73);
+            this.labelInventoryService.Name = "labelInventoryService";
+            this.labelInventoryService.Size = new System.Drawing.Size(55, 17);
+            this.labelInventoryService.TabIndex = 24;
+            this.labelInventoryService.Text = "Service";
+            this.labelInventoryService.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // dataGridViewInventory
             // 
@@ -791,6 +878,7 @@
             this.dataGridViewInventory.TabIndex = 23;
             this.dataGridViewInventory.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewInventory_RowHeaderMouseDoubleClick);
             this.dataGridViewInventory.RowHeaderMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewInventory_RowHeaderMouseDoubleClick);
+            this.dataGridViewInventory.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // labelInventoryTool
             // 
@@ -800,6 +888,7 @@
             this.labelInventoryTool.Size = new System.Drawing.Size(36, 17);
             this.labelInventoryTool.TabIndex = 22;
             this.labelInventoryTool.Text = "Tool";
+            this.labelInventoryTool.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // textBoxInventoryTool
             // 
@@ -808,84 +897,144 @@
             this.textBoxInventoryTool.Name = "textBoxInventoryTool";
             this.textBoxInventoryTool.Size = new System.Drawing.Size(306, 29);
             this.textBoxInventoryTool.TabIndex = 21;
+            this.textBoxInventoryTool.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // tabPageBillingStatements
             // 
+            this.tabPageBillingStatements.Controls.Add(this.labelPayedPayments);
+            this.tabPageBillingStatements.Controls.Add(this.labelPendingPayments);
+            this.tabPageBillingStatements.Controls.Add(this.dataGridViewPayedBilling);
             this.tabPageBillingStatements.Controls.Add(this.buttonPaid);
-            this.tabPageBillingStatements.Controls.Add(this.dataGridViewBillingStatement);
+            this.tabPageBillingStatements.Controls.Add(this.dataGridViewPendingBilling);
             this.tabPageBillingStatements.Location = new System.Drawing.Point(4, 25);
             this.tabPageBillingStatements.Name = "tabPageBillingStatements";
             this.tabPageBillingStatements.Size = new System.Drawing.Size(922, 460);
             this.tabPageBillingStatements.TabIndex = 4;
             this.tabPageBillingStatements.Text = "Billing Statements";
             this.tabPageBillingStatements.UseVisualStyleBackColor = true;
+            this.tabPageBillingStatements.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
+            // 
+            // labelPayedPayments
+            // 
+            this.labelPayedPayments.AutoSize = true;
+            this.labelPayedPayments.Location = new System.Drawing.Point(26, 197);
+            this.labelPayedPayments.Name = "labelPayedPayments";
+            this.labelPayedPayments.Size = new System.Drawing.Size(126, 17);
+            this.labelPayedPayments.TabIndex = 4;
+            this.labelPayedPayments.Text = "Pending Payments";
+            this.labelPayedPayments.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
+            // 
+            // labelPendingPayments
+            // 
+            this.labelPendingPayments.AutoSize = true;
+            this.labelPendingPayments.Location = new System.Drawing.Point(26, 9);
+            this.labelPendingPayments.Name = "labelPendingPayments";
+            this.labelPendingPayments.Size = new System.Drawing.Size(126, 17);
+            this.labelPendingPayments.TabIndex = 3;
+            this.labelPendingPayments.Text = "Pending Payments";
+            this.labelPendingPayments.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
+            // 
+            // dataGridViewPayedBilling
+            // 
+            this.dataGridViewPayedBilling.AllowUserToAddRows = false;
+            this.dataGridViewPayedBilling.AllowUserToDeleteRows = false;
+            this.dataGridViewPayedBilling.AllowUserToResizeColumns = false;
+            this.dataGridViewPayedBilling.AllowUserToResizeRows = false;
+            this.dataGridViewPayedBilling.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewPayedBilling.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
+            this.dataGridViewPayedBilling.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewPayedBilling.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.dataGridViewPayedBilling.Location = new System.Drawing.Point(29, 217);
+            this.dataGridViewPayedBilling.Name = "dataGridViewPayedBilling";
+            this.dataGridViewPayedBilling.ReadOnly = true;
+            this.dataGridViewPayedBilling.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+            this.dataGridViewPayedBilling.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridViewPayedBilling.ShowEditingIcon = false;
+            this.dataGridViewPayedBilling.Size = new System.Drawing.Size(864, 163);
+            this.dataGridViewPayedBilling.TabIndex = 2;
+            this.dataGridViewPayedBilling.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // buttonPaid
             // 
-            this.buttonPaid.Location = new System.Drawing.Point(749, 406);
+            this.buttonPaid.Location = new System.Drawing.Point(741, 406);
             this.buttonPaid.Name = "buttonPaid";
             this.buttonPaid.Size = new System.Drawing.Size(152, 36);
             this.buttonPaid.TabIndex = 1;
             this.buttonPaid.Text = "Paid";
             this.buttonPaid.UseVisualStyleBackColor = true;
             this.buttonPaid.Click += new System.EventHandler(this.buttonPaid_Click);
+            this.buttonPaid.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
-            // dataGridViewBillingStatement
+            // dataGridViewPendingBilling
             // 
-            this.dataGridViewBillingStatement.AllowUserToAddRows = false;
-            this.dataGridViewBillingStatement.AllowUserToDeleteRows = false;
-            this.dataGridViewBillingStatement.AllowUserToResizeColumns = false;
-            this.dataGridViewBillingStatement.AllowUserToResizeRows = false;
-            this.dataGridViewBillingStatement.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridViewBillingStatement.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
-            this.dataGridViewBillingStatement.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewBillingStatement.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.dataGridViewBillingStatement.Location = new System.Drawing.Point(35, 22);
-            this.dataGridViewBillingStatement.Name = "dataGridViewBillingStatement";
-            this.dataGridViewBillingStatement.ReadOnly = true;
-            this.dataGridViewBillingStatement.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-            this.dataGridViewBillingStatement.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewBillingStatement.ShowEditingIcon = false;
-            this.dataGridViewBillingStatement.Size = new System.Drawing.Size(858, 378);
-            this.dataGridViewBillingStatement.TabIndex = 0;
-            this.dataGridViewBillingStatement.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewBillingStatement_RowHeaderMouseClick);
+            this.dataGridViewPendingBilling.AllowUserToAddRows = false;
+            this.dataGridViewPendingBilling.AllowUserToDeleteRows = false;
+            this.dataGridViewPendingBilling.AllowUserToResizeColumns = false;
+            this.dataGridViewPendingBilling.AllowUserToResizeRows = false;
+            this.dataGridViewPendingBilling.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewPendingBilling.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
+            this.dataGridViewPendingBilling.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewPendingBilling.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.dataGridViewPendingBilling.Location = new System.Drawing.Point(29, 29);
+            this.dataGridViewPendingBilling.Name = "dataGridViewPendingBilling";
+            this.dataGridViewPendingBilling.ReadOnly = true;
+            this.dataGridViewPendingBilling.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+            this.dataGridViewPendingBilling.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridViewPendingBilling.ShowEditingIcon = false;
+            this.dataGridViewPendingBilling.Size = new System.Drawing.Size(864, 163);
+            this.dataGridViewPendingBilling.TabIndex = 0;
+            this.dataGridViewPendingBilling.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewBillingStatement_RowHeaderMouseClick);
+            this.dataGridViewPendingBilling.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // tabPageThisWeek
             // 
-            this.tabPageThisWeek.Controls.Add(this.dataGridView2);
+            this.tabPageThisWeek.Controls.Add(this.dataGridViewWeeklySchedule);
             this.tabPageThisWeek.Location = new System.Drawing.Point(4, 25);
             this.tabPageThisWeek.Name = "tabPageThisWeek";
             this.tabPageThisWeek.Size = new System.Drawing.Size(922, 460);
             this.tabPageThisWeek.TabIndex = 5;
             this.tabPageThisWeek.Text = "Weekly Schedule";
             this.tabPageThisWeek.UseVisualStyleBackColor = true;
+            this.tabPageThisWeek.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
-            // dataGridView2
+            // dataGridViewWeeklySchedule
             // 
-            this.dataGridView2.AllowUserToAddRows = false;
-            this.dataGridView2.AllowUserToDeleteRows = false;
-            this.dataGridView2.AllowUserToResizeColumns = false;
-            this.dataGridView2.AllowUserToResizeRows = false;
-            this.dataGridView2.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridView2.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.dataGridView2.Location = new System.Drawing.Point(35, 22);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-            this.dataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView2.ShowEditingIcon = false;
-            this.dataGridView2.Size = new System.Drawing.Size(858, 402);
-            this.dataGridView2.TabIndex = 1;
+            this.dataGridViewWeeklySchedule.AllowUserToAddRows = false;
+            this.dataGridViewWeeklySchedule.AllowUserToDeleteRows = false;
+            this.dataGridViewWeeklySchedule.AllowUserToResizeColumns = false;
+            this.dataGridViewWeeklySchedule.AllowUserToResizeRows = false;
+            this.dataGridViewWeeklySchedule.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewWeeklySchedule.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
+            this.dataGridViewWeeklySchedule.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewWeeklySchedule.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.dataGridViewWeeklySchedule.Location = new System.Drawing.Point(33, 27);
+            this.dataGridViewWeeklySchedule.Name = "dataGridViewWeeklySchedule";
+            this.dataGridViewWeeklySchedule.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+            this.dataGridViewWeeklySchedule.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridViewWeeklySchedule.ShowEditingIcon = false;
+            this.dataGridViewWeeklySchedule.Size = new System.Drawing.Size(858, 402);
+            this.dataGridViewWeeklySchedule.TabIndex = 1;
+            this.dataGridViewWeeklySchedule.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // tabPageReportViewer
             // 
+            this.tabPageReportViewer.Controls.Add(this.reportViewerReports);
             this.tabPageReportViewer.Location = new System.Drawing.Point(4, 25);
             this.tabPageReportViewer.Name = "tabPageReportViewer";
             this.tabPageReportViewer.Size = new System.Drawing.Size(922, 460);
             this.tabPageReportViewer.TabIndex = 7;
             this.tabPageReportViewer.Text = "Reports";
             this.tabPageReportViewer.UseVisualStyleBackColor = true;
+            this.tabPageReportViewer.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
+            // 
+            // reportViewerReports
+            // 
+            this.reportViewerReports.Location = new System.Drawing.Point(29, 39);
+            this.reportViewerReports.Name = "reportViewerReports";
+            this.reportViewerReports.ServerReport.BearerToken = null;
+            this.reportViewerReports.Size = new System.Drawing.Size(857, 387);
+            this.reportViewerReports.TabIndex = 0;
+            this.reportViewerReports.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             // 
             // AlexisConstructionServices
             // 
@@ -897,6 +1046,7 @@
             this.Name = "AlexisConstructionServices";
             this.Text = "AlexisConstructionServices";
             this.Load += new System.EventHandler(this.AlexisConstructionServices_Load);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabPageServicesBooking_MouseMove);
             this.panelTop.ResumeLayout(false);
             this.panelTop.PerformLayout();
             this.tabControlMain.ResumeLayout(false);
@@ -916,9 +1066,12 @@
             this.tabPageInventory.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewInventory)).EndInit();
             this.tabPageBillingStatements.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewBillingStatement)).EndInit();
+            this.tabPageBillingStatements.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPayedBilling)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPendingBilling)).EndInit();
             this.tabPageThisWeek.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewWeeklySchedule)).EndInit();
+            this.tabPageReportViewer.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -955,14 +1108,14 @@
         private System.Windows.Forms.Label labelTotalFee;
         private System.Windows.Forms.Label labelServiceDuration;
         private System.Windows.Forms.Label labelBookingService;
-        private System.Windows.Forms.TextBox textBoxServiceBookingTotalFee;
-        private System.Windows.Forms.TextBox textBoxBookingDuration;
+        private System.Windows.Forms.TextBox TextBox_TotalFee;
+        private System.Windows.Forms.TextBox TextBox_ServiceDuration;
         private System.Windows.Forms.TabPage tabPageBillingStatements;
         private System.Windows.Forms.TabPage tabPageThisWeek;
-        private System.Windows.Forms.DataGridView dataGridViewBillingStatement;
+        private System.Windows.Forms.DataGridView dataGridViewPendingBilling;
         private System.Windows.Forms.Button buttonRemoveAdditionalService;
         private System.Windows.Forms.Button buttonAddAdditionalServiceLib;
-        private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.DataGridView dataGridViewWeeklySchedule;
         private System.Windows.Forms.Button buttonPaid;
         private System.Windows.Forms.Button buttonCancelBook;
         private System.Windows.Forms.Button buttonBookService;
@@ -974,13 +1127,13 @@
         private System.Windows.Forms.DataGridView dataGridViewServicesSrvc;
         private System.Windows.Forms.Label labelHourlyRate;
         private System.Windows.Forms.TextBox textBoxServiceHourlyRate;
-        private System.Windows.Forms.TextBox textBoxBookingHourlyRate;
+        private System.Windows.Forms.TextBox TextBox_HourlyRate;
         private System.Windows.Forms.Label labelBookHourlyRate;
         private System.Windows.Forms.TabPage tabPageInventory;
         private System.Windows.Forms.Label labelInventoryTool;
         private System.Windows.Forms.TextBox textBoxInventoryTool;
         private System.Windows.Forms.ComboBox comboBoxInventoryService;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelInventoryService;
         private System.Windows.Forms.DataGridView dataGridViewInventory;
         private System.Windows.Forms.Button buttonEditLibItem;
         private System.Windows.Forms.Button buttonDeleteToolInventory;
@@ -991,5 +1144,11 @@
         private System.Windows.Forms.TextBox textBoxServiceLib;
         private System.Windows.Forms.TextBox textBoxServiceTypeInventory;
         private System.Windows.Forms.TabPage tabPageReportViewer;
+        private Microsoft.Reporting.WinForms.ReportViewer reportViewerReports;
+        private System.Windows.Forms.Label labelPendingPayments;
+        private System.Windows.Forms.DataGridView dataGridViewPayedBilling;
+        private System.Windows.Forms.Label labelPayedPayments;
+        private System.Windows.Forms.TextBox TextBox_OverallTotalFee;
+        private System.Windows.Forms.Label labelOverallTotalFee;
     }
 }

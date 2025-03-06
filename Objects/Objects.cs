@@ -37,6 +37,7 @@ namespace alexisRetry.Objects
         public static int RentedDuration { get; set; }
         public static int HourlyRate { get; set; }
         public static int TotalFee { get; set; }
+        public static int OverallTotalFee { get; set; }
     }
     public class multipleBookings
     {
@@ -48,6 +49,9 @@ namespace alexisRetry.Objects
 
         public static int time1 { get; set; }
         public static int time2 { get; set; }
+
+        public static int totalFee1 { get; set; }
+        public static int totalFee2 { get; set; }
     }
 
     public class ClientObjects
@@ -91,8 +95,13 @@ namespace alexisRetry.Objects
         public static int quantity { get; set; }
     }
 
-    public class validators
+    public class BillingObject
     {
-        
+        public static int transactionId { get; set; }
+        public static int clientId { get; set; }
+        public static int serviceDuration { get; set; }
+        public static int ratePerHour { get; set; }
+        public static int totalFee { get; set; }
+        public static string paymentStatus { get; set; }
     }
 }

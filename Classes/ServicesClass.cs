@@ -80,7 +80,7 @@ namespace alexisRetry.Classes
         {
             using (SqlConnection connection = DatabaseConnection.Establish())
             {
-                using (SqlCommand command = new SqlCommand("SELECT Tool FROM D1.Services WHERE Service = @service", connection))
+                using (SqlCommand command = new SqlCommand("SELECT Tool FROM D1.Tools WHERE Service = @service", connection))
                 {
                     command.Parameters.AddWithValue("@service", Objects.ServiceBooking.Service);
 
@@ -137,7 +137,7 @@ namespace alexisRetry.Classes
 
                     if (multipleBookings.Service1 != null)
                     {
-                        int total1 = multipleBookings.Fee1 * multipleBookings.time1;
+                        //int total1 = multipleBookings.Fee1 * multipleBookings.time1;
                         using (SqlCommand command = new SqlCommand("INSERT INTO D1.TransactionLogs (UserId, Username, Service, DateBooked, TimeRender, pHourFee, PaymentStatus, TotalFee) VALUES(@userId, @username, @service, @datebooked, @timerender, @pHourFee, @paymentstatus, @TotalFee)", connection))
                         {
                             command.Parameters.AddWithValue("@userId", ClientObjects.ClientId);
@@ -147,13 +147,13 @@ namespace alexisRetry.Classes
                             command.Parameters.AddWithValue("@timerender", multipleBookings.time1);
                             command.Parameters.AddWithValue("@pHourFee", multipleBookings.Fee1);
                             command.Parameters.AddWithValue("@paymentStatus", "Pending");
-                            command.Parameters.AddWithValue("@TotalFee", total1); //Create a Textbox for the total fee
+                            command.Parameters.AddWithValue("@TotalFee", multipleBookings.totalFee1); //Create a Textbox for the total fee
                             command.ExecuteNonQuery();
                         }
                     }
                     if (multipleBookings.Service2 != null)
                     {
-                        int total2 = multipleBookings.Fee2 * multipleBookings.time2;
+                        //int total2 = multipleBookings.Fee2 * multipleBookings.time2;
                         using (SqlCommand command = new SqlCommand("INSERT INTO D1.TransactionLogs (UserId, Username, Service, DateBooked, TimeRender, pHourFee, PaymentStatus, TotalFee) VALUES(@userId, @username, @service, @datebooked, @timerender, @pHourFee, @paymentstatus, @TotalFee)", connection))
                         {
                             command.Parameters.AddWithValue("@userId", ClientObjects.ClientId);
@@ -163,7 +163,7 @@ namespace alexisRetry.Classes
                             command.Parameters.AddWithValue("@timerender", multipleBookings.time2);
                             command.Parameters.AddWithValue("@pHourFee", multipleBookings.Fee2);
                             command.Parameters.AddWithValue("@paymentStatus", "Pending");
-                            command.Parameters.AddWithValue("@TotalFee", total2); //Create a Textbox for the total fee
+                            command.Parameters.AddWithValue("@TotalFee", multipleBookings.totalFee2); //Create a Textbox for the total fee
                             command.ExecuteNonQuery();
                         }
                     }
@@ -199,6 +199,10 @@ namespace alexisRetry.Classes
                     ClientObjects.ClientId = Convert.ToInt32(command.ExecuteScalar());
                 }
             }
+        }
+        public static void OverallTotalFee()
+        {
+            Objects.ServiceBooking.OverallTotalFee = Objects.ServiceBooking.TotalFee + multipleBookings.totalFee1 + multipleBookings.totalFee2;
         }
     }
 }
