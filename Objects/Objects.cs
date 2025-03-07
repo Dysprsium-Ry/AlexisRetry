@@ -1,5 +1,7 @@
 ﻿using alexisRetry.Classes;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace alexisRetry.Objects
 {
@@ -39,19 +41,54 @@ namespace alexisRetry.Objects
         public static int TotalFee { get; set; }
         public static int OverallTotalFee { get; set; }
     }
-    public class multipleBookings
+
+    public class Booking
     {
-        public static string Service1 { get; set; }
-        public static string Service2 { get; set; }
+        public string Service { get; set; }
+        public DateTime BookedDate { get; set; }
+        public int RentedDuration { get; set; }
+        public int HourlyRate { get; set; }
+        public int TotalFee { get; set; }
 
-        public static int Fee1 { get; set; }
-        public static int Fee2 { get; set; }
+        public override bool Equals(object obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            }
 
-        public static int time1 { get; set; }
-        public static int time2 { get; set; }
+            Booking other = (Booking)obj;
 
-        public static int totalFee1 { get; set; }
-        public static int totalFee2 { get; set; }
+            return Service == other.Service &&
+                   BookedDate == other.BookedDate; //&&
+                   //RentedDuration == other.RentedDuration &&
+                   //HourlyRate == other.HourlyRate &&
+                   //TotalFee == other.TotalFee;
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 17;
+                hash = hash * 23 + (Service?.GetHashCode() ?? 0);
+                hash = hash * 23 + BookedDate.GetHashCode();
+                //hash = hash * 23 + RentedDuration.GetHashCode();
+                //hash = hash * 23 + HourlyRate.GetHashCode();
+                //hash = hash * 23 + TotalFee.GetHashCode();
+                return hash;
+            }
+        }
+    }
+
+    public class AdditionalBooking
+    {
+        public static List<Booking> TransactionsList = new List<Booking>();
+        public static string Service { get; set; }
+        public static DateTime BookedDate { get; set; }
+        public static int RentedDuration { get; set; }
+        public static int HourlyRate { get; set; }
+        public static int TotalFee { get; set; }
     }
 
     public class ClientObjects
@@ -104,4 +141,13 @@ namespace alexisRetry.Objects
         public static int totalFee { get; set; }
         public static string paymentStatus { get; set; }
     }
+
+    public class ReportObjects
+    {
+        public static string service { get; set; }
+        public static int totalFee { get; set; }
+        public static int totalDuration { get; set; }
+        public static int OverallTotalFee { get; set; }
+    }
+
 }

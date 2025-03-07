@@ -78,6 +78,7 @@
   <ItemGroup>
     <Compile Include="Classes\BillingClass.cs" />
     <Compile Include="Classes\InventoryClass.cs" />
+    <Compile Include="Classes\ReportClass.cs" />
     <Compile Include="Classes\WeeklyScheduleClass.cs" />
     <Compile Include="Classes\ServiceLibraryClass.cs" />
     <Compile Include="Classes\ClientClass.cs" />
@@ -91,11 +92,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DbA1DataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Forms\AddService.cs">
-      <SubType>Form</SubType>
+    <Compile Include="DbA1DataSet1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DbA1DataSet1.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Forms\AddService.Designer.cs">
-      <DependentUpon>AddService.cs</DependentUpon>
+    <Compile Include="DbA1DataSet2.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DbA1DataSet2.xsd</DependentUpon>
     </Compile>
     <Compile Include="Forms\AlexisConstructionServices.cs">
       <SubType>Form</SubType>
@@ -107,9 +112,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="bin\Debug\AlexisRetryReport.rdlc" />
-    <EmbeddedResource Include="Forms\AddService.resx">
-      <DependentUpon>AddService.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\AlexisConstructionServices.resx">
       <DependentUpon>AlexisConstructionServices.cs</DependentUpon>
     </EmbeddedResource>
@@ -133,7 +135,42 @@
     <None Include="DbA1DataSet.xss">
       <DependentUpon>DbA1DataSet.xsd</DependentUpon>
     </None>
+    <None Include="DbA1DataSet1.xsc">
+      <DependentUpon>DbA1DataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="DbA1DataSet1.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DbA1DataSet1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DbA1DataSet1.xss">
+      <DependentUpon>DbA1DataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="DbA1DataSet2.xsc">
+      <DependentUpon>DbA1DataSet2.xsd</DependentUpon>
+    </None>
+    <None Include="DbA1DataSet2.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DbA1DataSet2.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DbA1DataSet2.xss">
+      <DependentUpon>DbA1DataSet2.xsd</DependentUpon>
+    </None>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\alexisRetry.Objects.AdditionalBooking.datasource" />
+    <None Include="Properties\DataSources\alexisRetry.Objects.BillingObject.datasource" />
+    <None Include="Properties\DataSources\alexisRetry.Objects.Booking.datasource" />
+    <None Include="Properties\DataSources\alexisRetry.Objects.ClientObjects.datasource" />
+    <None Include="Properties\DataSources\alexisRetry.Objects.ClientRegister.datasource" />
+    <None Include="Properties\DataSources\alexisRetry.Objects.InventoryObject.datasource" />
+    <None Include="Properties\DataSources\alexisRetry.Objects.Objects.datasource" />
+    <None Include="Properties\DataSources\alexisRetry.Objects.ReportObjects.datasource" />
+    <None Include="Properties\DataSources\alexisRetry.Objects.ServiceBooking.datasource" />
+    <None Include="Properties\DataSources\alexisRetry.Objects.ServiceLibraryObject.datasource" />
+    <None Include="Properties\DataSources\alexisRetry.Objects.ServiceObjects.datasource" />
+    <None Include="Properties\DataSources\alexisRetry.Objects.transactionLogsObject.datasource" />
+    <None Include="Properties\DataSources\alexisRetry.Objects.updateClientInfo.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

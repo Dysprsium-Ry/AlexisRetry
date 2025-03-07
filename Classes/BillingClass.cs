@@ -36,7 +36,7 @@ namespace alexisRetry.Classes
         {
             DataGridViewRow selectedRow = dataGirdView.SelectedRows[0];
 
-            Objects.ServiceBooking.Service = selectedRow.Cells["LogId"].Value.ToString();
+            BillingObject.transactionId = Convert.ToInt32(selectedRow.Cells["LogId"].Value ?? 0);
 
         }
 
@@ -46,7 +46,7 @@ namespace alexisRetry.Classes
             {
                 using (SqlCommand command = new SqlCommand("UPDATE D1.TransactionLogs SET PaymentStatus = 'Paid' WHERE LogId = @logId", connection))
                 {
-                    command.Parameters.AddWithValue("@logId", Objects.ServiceBooking.Service);
+                    command.Parameters.AddWithValue("@logId", BillingObject.transactionId);
                     command.ExecuteNonQuery();
                 }
             }
