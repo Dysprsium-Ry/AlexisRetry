@@ -29,8 +29,9 @@ namespace alexisRetry.Classes
                     reportViewer.LocalReport.DataSources.Clear();
 
                     ReportDataSource reportDataSource = new ReportDataSource("DataSet2", dataset);
-                    ReportParameter custName = new ReportParameter("CustomerName", ServiceBooking.clientUsername);
+                    ReportParameter custName = new ReportParameter("CustomerName", BillingObject.username);
                     ReportParameter dateBooked = new ReportParameter("DateBooked", Objects.ServiceBooking.Service);
+
                     reportViewer.LocalReport.ReportPath = "AlexisRetryReport.rdlc";
                     reportViewer.LocalReport.DataSources.Add(reportDataSource);
                     reportViewer.LocalReport.SetParameters(custName);

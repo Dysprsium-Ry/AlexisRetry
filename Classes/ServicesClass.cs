@@ -10,33 +10,11 @@ namespace alexisRetry.Classes
 {
     public class ServicesClass
     {
-        //public static void ServicesLoad()
-        //{
-        //    using (SqlConnection connection = DatabaseConnection.Establish())
-        //    {
-        //        using (SqlCommand command = new SqlCommand("SELECT Service FROM D1.Services", connection))
-        //        {
-
-        //            using (SqlDataReader reader = command.ExecuteReader())
-        //            {
-        //                List<string> services = new List<string>();
-        //                while (reader.Read())
-        //                {
-        //                    if (!services.Contains(reader.GetString(0)))
-        //                    {
-        //                        services.Add(reader.GetString(0));
-        //                    }
-        //                }
-        //                ServiceObjects.Service = services.ToArray();
-        //            }
-        //        }
-        //    }
-        //}
         public static string[] GetServices()
         {
             using (SqlConnection connection = DatabaseConnection.Establish())
             {
-                using (SqlCommand command = new SqlCommand("SELECT Service FROM D1.Services", connection))
+                using (SqlCommand command = new SqlCommand("SELECT DISTINCT s.Service from D1.Services s JOIN D1.Tools t on t.Service = s.Service WHERE t.Quantity > 0", connection))
                 {
 
                     using (SqlDataReader reader = command.ExecuteReader())
@@ -60,7 +38,7 @@ namespace alexisRetry.Classes
         {
             using (SqlConnection connection = DatabaseConnection.Establish())
             {
-                using (SqlCommand command = new SqlCommand("SELECT DISTINCT Service FROM D1.Services", connection))
+                using (SqlCommand command = new SqlCommand("SELECT DISTINCT s.Service FROM D1.Services s JOIN D1.Tools t on t.Service = s.Service WHERE t.Quantity > 0", connection))
                 {
                     using (SqlDataAdapter adapter = new SqlDataAdapter(command))
                     {
@@ -80,7 +58,7 @@ namespace alexisRetry.Classes
         {
             using (SqlConnection connection = DatabaseConnection.Establish())
             {
-                using (SqlCommand command = new SqlCommand("SELECT Tool, Quantity FROM D1.Tools WHERE Service = @service", connection))
+                using (SqlCommand command = new SqlCommand("SELECT Tool, Quantity FROM D1.Tools WHERE Service = @service AND Quantity > 0", connection))
                 {
                     command.Parameters.AddWithValue("@service", Objects.ServiceBooking.Service);
 
@@ -102,11 +80,11 @@ namespace alexisRetry.Classes
         {
             using (SqlConnection connection = DatabaseConnection.Establish())
             {
-                using (SqlCommand command = new SqlCommand("SELECT Count(*) FROM D1.TransactionLogs WHERE DateBooked = @datebooked AND Service = @service", connection))
+                using (SqlCommand command = new SqlCommand("SELECT Count(*) FROM D1.TransactionLogs WHERE CONVERT(DATE, ReservationDate) = Cast(@reserveDate AS DATE)", connection))
                 {
-                    command.Parameters.AddWithValue("@datebooked", Objects.ServiceBooking.BookedDate == default(DateTime) ? (object)DBNull.Value : Objects.ServiceBooking.BookedDate);
-                    command.Parameters.AddWithValue("@userId", ClientObjects.ClientId);
-                    command.Parameters.AddWithValue("@service", Objects.ServiceBooking.Service ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@reserveDate", Objects.ServiceBooking.BookedDate == default(DateTime) ? (object)DBNull.Value : Objects.ServiceBooking.BookedDate);
+                    //command.Parameters.AddWithValue("@userId", ClientObjects.ClientId);
+                    //command.Parameters.AddWithValue("@service", Objects.ServiceBooking.Service ?? (object)DBNull.Value);
 
                     int count = (command.ExecuteScalar() as int?) ?? 0;
 
@@ -121,7 +99,7 @@ namespace alexisRetry.Classes
             {
                 using (SqlConnection connection = DatabaseConnection.Establish())
                 {
-                    using (SqlCommand command = new SqlCommand("INSERT INTO D1.TransactionLogs (UserId, Username, Service, DateBooked, TimeRender, pHourFee, PaymentStatus, TotalFee) VALUES(@userId, @username, @service, @datebooked, @timerender, @pHourFee, @paymentstatus, @TotalFee)", connection))
+                    using (SqlCommand command = new SqlCommand("INSERT INTO D1.TransactionLogs (UserId, Username, Service, ReservationDate, TimeRender, pHourFee, PaymentStatus, TotalFee, DateBooked, EndDate, ToolsUsed) VALUES(@userId, @username, @service, @datebooked, @timerender, @pHourFee, @paymentstatus, @TotalFee, GetDate(), @endDate, @toolsUsed)", connection))
                     {
                         command.Parameters.AddWithValue("@userId", ClientObjects.ClientId);
                         command.Parameters.AddWithValue("@username", Objects.ServiceBooking.clientUsername);
@@ -131,13 +109,26 @@ namespace alexisRetry.Classes
                         command.Parameters.AddWithValue("@pHourFee", Objects.ServiceBooking.HourlyRate);
                         command.Parameters.AddWithValue("@paymentStatus", "Pending");
                         command.Parameters.AddWithValue("@TotalFee", Objects.ServiceBooking.TotalFee);
+                        command.Parameters.AddWithValue("@endDate", Objects.ServiceBooking.CalculatedDate);
+                        command.Parameters.AddWithValue("@ToolsUsed", ToJson.Tools);
                         command.ExecuteNonQuery();
-
                     }
                 }
             }
             catch { MessageBox.Show("Booking Failed, unexpected error occurred.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); }
         }
+        public static void ToolDecrement()
+        {
+            using (SqlConnection connection = DatabaseConnection.Establish())
+            {
+                using (SqlCommand command = new SqlCommand("UPDATE D1.Tools SET Quantity = Quantity - 1 WHERE Service = @service AND Quantity > 0", connection))
+                {
+                    command.Parameters.AddWithValue("@service", Objects.ServiceBooking.Service);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
         public static void selectDataGridRow(DataGridView dataGirdView)
         {
             DataGridViewRow selectedRow = dataGirdView.SelectedRows[0];
@@ -164,6 +155,39 @@ namespace alexisRetry.Classes
                 {
                     command.Parameters.AddWithValue("@username", ServiceObjects.Clientusername);
                     ClientObjects.ClientId = Convert.ToInt32(command.ExecuteScalar());
+                }
+            }
+        }
+        public static void BookingToolsRegistration()
+        {
+            using (SqlConnection connection = DatabaseConnection.Establish())
+            {
+                using (SqlCommand command = new SqlCommand("SELECT Tool FROM D1.Tools WHERE Service = @service AND Quantity > 0", connection))
+                {
+                    command.Parameters.AddWithValue("@service", Objects.ServiceBooking.Service);
+
+                    #region anotherWayAsTheySay
+                    //List<string> tools = new List<string>();
+                    //using (SqlDataReader reader = command.ExecuteReader())
+                    //{
+                    //    while (reader.Read())
+                    //    {
+                    //        tools.Add(reader.GetString(0));
+                    //        ToolsList.ToolList.AddRange((IEnumerable<ToolsList>)tools);
+                    //    }
+                    //}
+                    #endregion
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            if (!reader.IsDBNull(0))
+                            {
+                                ToolsList.ToolList.Add(new ToolsList { Tools = reader.GetString(0) });
+                            }
+                        }
+                    }
                 }
             }
         }

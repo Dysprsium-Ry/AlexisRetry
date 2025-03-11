@@ -2,6 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Runtime.InteropServices;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace alexisRetry.Objects
 {
@@ -36,10 +39,24 @@ namespace alexisRetry.Objects
         public static string clientUsername { get; set; }
         public static string Service { get; set; }
         public static DateTime BookedDate { get; set; }
+        public static DateTime CalculatedDate { get; set; }
+        public static int AdditionalTime { get; set; }
         public static int RentedDuration { get; set; }
         public static int HourlyRate { get; set; }
         public static int TotalFee { get; set; }
         public static int OverallTotalFee { get; set; }
+    }
+
+    public class ToJson
+    {
+        public static string Tools { get; set; }
+    }
+
+    public class ToolsList
+    {
+        //[JsonPropertyName($"Tool")]
+        public static List<ToolsList> ToolList = new List<ToolsList>();
+        public string Tools { get; set; }
     }
 
     public class Booking
@@ -49,6 +66,7 @@ namespace alexisRetry.Objects
         public int RentedDuration { get; set; }
         public int HourlyRate { get; set; }
         public int TotalFee { get; set; }
+        public string Tools { get; set; }
 
         public override bool Equals(object obj)
         {
@@ -135,6 +153,7 @@ namespace alexisRetry.Objects
     public class BillingObject
     {
         public static int transactionId { get; set; }
+        public static string username { get; set; }
         public static int clientId { get; set; }
         public static int serviceDuration { get; set; }
         public static int ratePerHour { get; set; }

@@ -1,6 +1,8 @@
 ﻿using alexisRetry.Classes;
 using alexisRetry.Objects;
 using System;
+using System.Linq;
+using System.Text.Json;
 using System.Windows.Forms;
 
 namespace alexisRetry.Forms
@@ -15,10 +17,11 @@ namespace alexisRetry.Forms
             refresh();
             OverallTotalFeeUpdate();
             dateTimePickerReservationDate.MinDate = DateTime.Now;
+            //dateTimePickerReservationDate.MinDate = DateTime.Now.AddHours(0);
         }
         private void AlexisConstructionServices_Load(object sender, EventArgs e)
         {
-            this.reportViewerReports.RefreshReport();
+            reportViewerReports.RefreshReport();
         }
 
         #region UniversalUsed Method | EventHandlers
@@ -58,7 +61,7 @@ namespace alexisRetry.Forms
             #endregion
 
             #region WeeklySchedule
-            WeeklyScheduleClass.WeeklyScheduleDataGridProvider(dataGridViewWeeklySchedule);
+            TransactionManagementClass.WeeklyScheduleDataGridProvider(dataGridViewWeeklySchedule);
             #endregion
 
             #region BindingSource
@@ -126,12 +129,45 @@ namespace alexisRetry.Forms
             }
             return false;
         }
+        private DateTime WorkingHours()
+        {
+            dateTimePickerReservationDate.Value = DateTime.Now;
+            DateTime date = dateTimePickerReservationDate.Value.AddHours(int.Parse(TextBox_ServiceDuration.Text));
+
+            while (date.Hour >= 17)
+            {
+                TimeSpan remainingHours = date - date.Date.AddHours(17);
+                DateTime nextDayStart = dateTimePickerReservationDate.Value.Date.AddDays(1).AddHours(8);
+                DateTime endTime = nextDayStart.Add(remainingHours);
+                return endTime;
+            }
+            return date;
+        }
+        private void ExcessTimeBooking()
+        {
+            if (ServiceBooking.AdditionalTime > 0)
+            {
+                MessageBox.Show($"Service Duration exceeds the working hours. Additional {ServiceBooking.AdditionalTime} hours will be added to the next day", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                ServiceBooking.CalculatedDate = WorkingHours();
+                ServicesClass.ServiceBooking();
+            }
+        }
         #endregion
 
         #region eventHandlers
         private void buttonBookService_Click(object sender, EventArgs e)
         {
-            if (BookingValidator()) { return; }
+            //DateTime date = dateTimePickerReservationDate.Value.AddHours(int.Parse(TextBox_ServiceDuration.Text));
+            //if (int.TryParse(TextBox_ServiceDuration.Text, out int AddedHours))
+            //{
+            //    ServiceBooking.CalculatedDate = dateTimePickerReservationDate.Value.AddHours(AddedHours);
+            //}
+
+            ServiceBooking.CalculatedDate = WorkingHours();
+
+            ServicesClass.BookingToolsRegistration();
+            ToJson.Tools = JsonSerializer.Serialize(ToolsList.ToolList);
 
             if (AdditionalBooking.TransactionsList.Count > 0)
             {
@@ -146,25 +182,24 @@ namespace alexisRetry.Forms
                     bool isDateBooked = ServicesClass.checkDate();
 
                     if (isDateBooked) { MessageBox.Show($"Service {ServiceBooking.Service} is already booked in the selected Date", "Booking Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); }
-                    else
-                    {
-                        ServicesClass.ServiceBooking();
-                    }
+                    else { ServicesClass.ServiceBooking(); ExcessTimeBooking(); }
                 }
-                MessageBox.Show($"Service {ServiceBooking.Service} is Booked Succesfully", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information); refresh();
+                MessageBox.Show($"Service {ServiceBooking.Service} is Booked Succesfully", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information); AdditionalBooking.TransactionsList.Clear(); dataGridView.DataSource = null; refresh();
             }
             else
             {
+                if (BookingValidator()) { return; }
+
                 ServiceBooking.clientUsername = comboBoxClientUsername.Text;
                 ServiceBooking.Service = comboBoxServiceBook.Text;
-                ServiceBooking.BookedDate = dateTimePickerReservationDate.Value.Date;
+                ServiceBooking.BookedDate = dateTimePickerReservationDate.Value;
                 ServiceBooking.RentedDuration = int.Parse(TextBox_ServiceDuration.Text);
                 ServiceBooking.TotalFee = int.Parse(TextBox_TotalFee.Text);
 
                 bool isDateBooked = ServicesClass.checkDate();
 
                 if (isDateBooked) { MessageBox.Show("This type of service is already booked in this date selected", "Booking Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); }
-                else { ServicesClass.ServiceBooking(); MessageBox.Show("Booked Succesfully", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information); refresh(); }
+                else { ServicesClass.ServiceBooking(); ServicesClass.ToolDecrement(); MessageBox.Show("Booked Succesfully", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information); ExcessTimeBooking(); refresh(); }
             }
         }
         private void comboBoxServiceBook_TextChanged(object sender, EventArgs e)
@@ -178,8 +213,12 @@ namespace alexisRetry.Forms
         private void comboBoxClientUsername_SelectedValueChanged(object sender, EventArgs e)
         {
             ServiceObjects.Clientusername = comboBoxClientUsername.Text;
-            //ClientClass.ClientIdList();
             ServicesClass.clientIdFetcher();
+        }
+        private void TextBox_ServiceDuration_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            WorkingHours();
+            dateTimePickerReservationDate.Value = WorkingHours();
         }
         private void textBoxNumericalTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -189,6 +228,15 @@ namespace alexisRetry.Forms
                 return;
             }
             HandleInputDisplay(e);
+            
+        }
+        private void TextBox_ServiceDuration_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (dateTimePickerReservationDate.Value.Hour >= 17)
+            {
+                WorkingHours();
+                dateTimePickerReservationDate.Value = WorkingHours();
+            }
         }
         private void textBoxTotalFee_TextChanged(object sender, EventArgs e)
         {
@@ -224,31 +272,42 @@ namespace alexisRetry.Forms
         {
             if (BookingValidator()) { return; }
 
-            var newbooking = (new Booking
+            if (!int.TryParse(TextBox_ServiceDuration.Text, out int rentedDuration) || !int.TryParse(TextBox_HourlyRate.Text, out int hourlyRate) || !int.TryParse(TextBox_TotalFee.Text, out int totalFee))
+            {
+                MessageBox.Show("Invalid input. Please check the values.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            ServiceBooking.CalculatedDate = WorkingHours();
+            ServicesClass.BookingToolsRegistration();
+            ToJson.Tools = JsonSerializer.Serialize(ToolsList.ToolList);
+
+            var newbooking = new Booking
             {
                 Service = comboBoxServiceBook.Text,
                 BookedDate = dateTimePickerReservationDate.Value.Date,
-                RentedDuration = int.Parse(TextBox_ServiceDuration.Text),
-                HourlyRate = int.Parse(TextBox_HourlyRate.Text),
-                TotalFee = int.Parse(TextBox_TotalFee.Text)
-            });
-
-            var overalltotal = int.Parse(TextBox_OverallTotalFee.Text);
-            overalltotal += newbooking.TotalFee;
+                RentedDuration = rentedDuration,
+                HourlyRate = hourlyRate,
+                TotalFee = totalFee
+            };
 
             if (!AdditionalBooking.TransactionsList.Contains(newbooking))
             {
                 AdditionalBooking.TransactionsList.Add(newbooking);
-                dataGridView.DataSource = null;
-                dataGridView.DataSource = AdditionalBooking.TransactionsList;
+
+                var overalltotal = AdditionalBooking.TransactionsList.Sum(booking => booking.TotalFee);
 
                 TextBox_OverallTotalFee.Text = overalltotal.ToString();
                 ServiceBooking.OverallTotalFee = overalltotal;
+
+                dataGridView.DataSource = null;
+                dataGridView.DataSource = AdditionalBooking.TransactionsList;
             }
             else
             {
-                MessageBox.Show("This booking already exists in the list.", "Items already exist", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("This booking already exists in the list.", "Duplicate Booking", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
+
             TextBox_ServiceDuration.Text = "0";
         }
         private void buttonRemoveAdditionalService_Click(object sender, EventArgs e)
@@ -312,19 +371,20 @@ namespace alexisRetry.Forms
         #region Client
         private void buttonClientAdd_Click(object sender, EventArgs e)
         {
-            ClientRegister.username = textBoxClientUsername.Text;
-            ClientRegister.email = textBoxClientEmail.Text;
-            ClientRegister.PhoneNumber = Convert.ToInt64(textBoxClientPhoneNumber.Text);
-            ClientRegister.name = textBoxClientName.Text;
-
             foreach (Control control in tabPageClients.Controls)
             {
-                if (control is TextBox textbox && textbox == null)
+                if (control is TextBox textbox && string.IsNullOrWhiteSpace(textbox.Text))
                 {
                     MessageBox.Show($"{textbox.Name} cannot be empty", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return;
                 }
             }
+
+            ClientRegister.username = TextBox_ClientUsername.Text;
+            ClientRegister.email = TextBox_ClientEmail.Text;
+            ClientRegister.PhoneNumber = Convert.ToInt64(TextBox_ClientPhoneNumber.Text);
+            ClientRegister.name = TextBox_ClientName.Text;
+
             ClientClass.AddClient();
             refresh();
             foreach (Control control in tabPageClients.Controls)
@@ -345,12 +405,12 @@ namespace alexisRetry.Forms
         }
         private void buttonUpdate_Click(object sender, EventArgs e)
         {
-            if (textBoxClientUsername.Text != updateClientInfo.username || textBoxClientEmail.Text != updateClientInfo.email || textBoxClientPhoneNumber.Text != updateClientInfo.phoneNum.ToString() || textBoxClientName.Text != updateClientInfo.name)
+            if (TextBox_ClientUsername.Text != updateClientInfo.username || TextBox_ClientEmail.Text != updateClientInfo.email || TextBox_ClientPhoneNumber.Text != updateClientInfo.phoneNum.ToString() || TextBox_ClientName.Text != updateClientInfo.name)
             {
-                updateClientInfo.username = textBoxClientUsername.Text;
-                updateClientInfo.email = textBoxClientEmail.Text;
-                updateClientInfo.phoneNum = Convert.ToInt64(textBoxClientPhoneNumber.Text);
-                updateClientInfo.name = textBoxClientName.Text;
+                updateClientInfo.username = TextBox_ClientUsername.Text;
+                updateClientInfo.email = TextBox_ClientEmail.Text;
+                updateClientInfo.phoneNum = Convert.ToInt64(TextBox_ClientPhoneNumber.Text);
+                updateClientInfo.name = TextBox_ClientName.Text;
 
                 ClientClass.UpdateClientAccount();
                 refresh();
@@ -371,10 +431,10 @@ namespace alexisRetry.Forms
             {
                 ClientClass.selectDataGridRow(dataGridViewClients);
 
-                textBoxClientUsername.Text = updateClientInfo.username;
-                textBoxClientEmail.Text = updateClientInfo.email;
-                textBoxClientPhoneNumber.Text = updateClientInfo.phoneNum.ToString();
-                textBoxClientName.Text = updateClientInfo.name;
+                TextBox_ClientUsername.Text = updateClientInfo.username;
+                TextBox_ClientEmail.Text = updateClientInfo.email;
+                TextBox_ClientPhoneNumber.Text = updateClientInfo.phoneNum.ToString();
+                TextBox_ClientName.Text = updateClientInfo.name;
             }
             else
             {
@@ -423,12 +483,13 @@ namespace alexisRetry.Forms
         }
         private void buttonEditLibItem_Click(object sender, EventArgs e)
         {
-            if (ServiceLibraryObject.service != textBoxServiceLib.Text && ServiceLibraryObject.HourlyRate != Convert.ToInt32(textBoxServiceHourlyRate.Text))
+            if (ServiceLibraryObject.service != textBoxServiceLib.Text || ServiceLibraryObject.HourlyRate != Convert.ToInt32(textBoxServiceHourlyRate.Text))
             {
                 ServiceLibraryObject.service = textBoxServiceLib.Text;
                 ServiceLibraryObject.HourlyRate = Convert.ToInt32(textBoxServiceHourlyRate.Text);
 
                 ServiceLibraryClass.UpdateService();
+                refresh();
             }
             else { MessageBox.Show("No changes Applied", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); }
         }
@@ -474,15 +535,16 @@ namespace alexisRetry.Forms
         }
         private void buttonEditToolInventory_Click(object sender, EventArgs e)
         {
-            if (InventoryObject.tool != textBoxInventoryTool.Text && InventoryObject.quantity != Convert.ToInt32(textBoxInventoryQuantity.Text))
+            if (InventoryObject.tool != textBoxInventoryTool.Text || InventoryObject.quantity != Convert.ToInt32(textBoxInventoryQuantity.Text))
             {
-                InventoryObject.service = textBoxInventoryTool.Text;
+                InventoryObject.tool = textBoxInventoryTool.Text;
                 InventoryObject.quantity = Convert.ToInt32(textBoxInventoryQuantity.Text);
 
                 InventoryClass.UpdateInventory();
                 refresh();
+                MessageBox.Show("Updated Successfully", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            MessageBox.Show("Updated Successfully", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            else { MessageBox.Show("No Changes Applied", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); }
         }
         private void dataGridViewInventory_RowHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
@@ -531,5 +593,7 @@ namespace alexisRetry.Forms
         #region Report
 
         #endregion
+
+        
     }
 }

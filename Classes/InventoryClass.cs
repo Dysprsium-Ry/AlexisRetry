@@ -83,7 +83,7 @@ namespace alexisRetry.Classes
         {
             using (SqlConnection connection = DatabaseConnection.Establish())
             {
-                using (SqlCommand command = new SqlCommand("UPDATE D1.Tool SET Tool = @tool, Quantity = @quantity WHERE Service = @service", connection))
+                using (SqlCommand command = new SqlCommand("UPDATE D1.Tools SET Tool = @tool, Quantity = @quantity WHERE Service = @service AND Tool = @tool", connection))
                 {
                     command.Parameters.AddWithValue("@service", InventoryObject.service);
                     command.Parameters.AddWithValue("@tool", InventoryObject.tool);
@@ -103,6 +103,17 @@ namespace alexisRetry.Classes
                     command.Parameters.AddWithValue("@tool", InventoryObject.tool);
                     command.Parameters.AddWithValue("@quantity", InventoryObject.quantity);
                     command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public static void ToolManagement()
+        {
+            using (SqlConnection connection = DatabaseConnection.Establish())
+            {
+                using (SqlCommand command = new SqlCommand("SELECT T.ReservationDate, T.TimeRender, T.UserId, C.Username, C.PhoneNumber, T.LogId, T.Service, T.PaymentStatus, T.DateBooked FROM D1.TransactionLogs T INNER JOIN D1.Clients C ON T.UserId = C.ClientId WHERE DATEPART (WEEK,T.DateBooked) = DATEPART (WEEK,GETDATE()) AND DATEPART (YEAR,T.DateBooked) = DATEPART(YEAR, GETDATE()) ORDER BY T.DateBooked", connection))
+                {
+
                 }
             }
         }

@@ -17,7 +17,7 @@ namespace alexisRetry.Classes
         {
             using (SqlConnection connection = DatabaseConnection.Establish())
             {
-                using (SqlCommand command = new SqlCommand("SELECT LogId, Username, Service, DateBooked, TimeRender, TotalFee, PaymentStatus FROM D1.TransactionLogs WHERE PaymentStatus <> 'Paid';", connection))
+                using (SqlCommand command = new SqlCommand("SELECT LogId, Username, Service, ReservationDate, TimeRender, TotalFee, PaymentStatus, DateBooked FROM D1.TransactionLogs WHERE PaymentStatus <> 'Paid' AND ReservationDate >= GetDate();", connection))
                 {
                     //command.Parameters.AddWithValue("@service", InventoryObject.service);
 
@@ -37,7 +37,7 @@ namespace alexisRetry.Classes
             DataGridViewRow selectedRow = dataGirdView.SelectedRows[0];
 
             BillingObject.transactionId = Convert.ToInt32(selectedRow.Cells["LogId"].Value ?? 0);
-
+            BillingObject.username = selectedRow.Cells["Username"].Value.ToString();
         }
 
         public static void ApprovePayment()
@@ -56,7 +56,7 @@ namespace alexisRetry.Classes
         {
             using (SqlConnection connection = DatabaseConnection.Establish())
             {
-                using (SqlCommand command = new SqlCommand("SELECT T.LogId, T.DateBooked, T.TimeRender, T.Service, C.ClientId, C.Username, C.PhoneNumber, T.PaymentStatus FROM D1.TransactionLogs T INNER JOIN D1.Clients C ON C.ClientId = T.UserId WHERE T.PaymentStatus = 'Paid'", connection))
+                using (SqlCommand command = new SqlCommand("SELECT T.LogId, T.DateBooked, T.TimeRender, T.Service, C.ClientId, C.Username, C.PhoneNumber, T.PaymentStatus FROM D1.TransactionLogs T INNER JOIN D1.Clients C ON C.ClientId = T.UserId WHERE T.PaymentStatus = 'Paid';", connection))
                 {
 
                     using (SqlDataAdapter adapter = new SqlDataAdapter(command))

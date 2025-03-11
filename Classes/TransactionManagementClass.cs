@@ -10,13 +10,13 @@ using System.Windows.Forms;
 
 namespace alexisRetry.Classes
 {
-    public static class WeeklyScheduleClass
+    public static class TransactionManagementClass
     {
         public static void WeeklyScheduleDataGridProvider(DataGridView dataGridView)
         {
             using (SqlConnection connection = DatabaseConnection.Establish())
             {
-                using (SqlCommand command = new SqlCommand("SELECT T.DateBooked, T.TimeRender, T.UserId, C.Username, C.PhoneNumber, T.LogId, T.Service, T.PaymentStatus FROM D1.TransactionLogs T INNER JOIN D1.Clients C ON T.UserId = C.ClientId WHERE DATEPART (WEEK,T.DateBooked) = DATEPART (WEEK,GETDATE()) AND DATEPART (YEAR,T.DateBooked) = DATEPART(YEAR, GETDATE()) ORDER BY T.DateBooked", connection))
+                using (SqlCommand command = new SqlCommand("SELECT T.ReservationDate, T.TimeRender, T.UserId, C.Username, C.PhoneNumber, T.LogId, T.Service, T.PaymentStatus, T.DateBooked FROM D1.TransactionLogs T INNER JOIN D1.Clients C ON T.UserId = C.ClientId WHERE DATEPART (WEEK,T.DateBooked) = DATEPART (WEEK,GETDATE()) AND DATEPART (YEAR,T.DateBooked) = DATEPART(YEAR, GETDATE()) ORDER BY T.DateBooked", connection))
                 {
                     using (SqlDataAdapter adapter = new SqlDataAdapter(command))
                     {
